@@ -2,7 +2,7 @@
 ## RotMG 2.2.2.0.0
 ### A modular Realm of the Mad God man-in-the-middle Proxy
 
-![Screenshot](/Screenshot.png)
+![Screenshot]
 -----------------------------------------------------------
 
 ## Setting Up (Assuming you have a compiled binary)

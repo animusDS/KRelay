@@ -1,5 +1,5 @@
 # KRelay
-## KRelay 1.6.0 | RotMG 1.6.0.0.0
+## KRelay ?.?.?.? | RotMG 2.?.?.?.?
 ### A modular Realm of the Mad God man-in-the-middle Proxy
 
 ![Screenshot](/Screenshot.png)
@@ -26,7 +26,7 @@ oSession.utilReplaceInResponse('<Servers>',
 6. Connect to USSW2 (the proxy server)
 
 ## K Relay Support Discord Server
-Join for help with K Relay, plugin discussions, etc.: https://discord.gg/AUyH8aUj2C
+Msg for help with K Relay, plugin discussions, etc.: animus#9097
 
-## Plugin Documentation
+## Plugin Documentation (OLD)
 [Can be found here](https://github.com/TheKronks/K_Relay_Plugin_Documentation/blob/master/README.md)

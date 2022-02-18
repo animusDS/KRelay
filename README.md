@@ -1,5 +1,5 @@
 # KRelay
-## KRelay ?.?.?.? | RotMG 2.?.?.?.?
+## RotMG 2.2.2.0.0
 ### A modular Realm of the Mad God man-in-the-middle Proxy
 
 ![Screenshot](/Screenshot.png)

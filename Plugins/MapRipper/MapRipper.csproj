@@ -77,10 +77,6 @@
         <Project>{b1b5f3c3-c4ff-4c6e-8879-d2e4e99beef9}</Project>
         <Name>Lib K Relay</Name>
       </ProjectReference>
-      <ProjectReference Include="..\Lib K Relay\Lib K Relay.csproj">
-        <Project>{b1b5f3c3-c4ff-4c6e-8879-d2e4e99beef9}</Project>
-        <Name>Lib K Relay</Name>
-      </ProjectReference>
     </ItemGroup>
     <ItemGroup>
       <EmbeddedResource Include="HandleForm.resx" />

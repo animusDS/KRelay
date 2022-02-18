@@ -15,11 +15,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glow", "Plugins\Glow\Glow.c
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoNexus", "Plugins\AutoNexus\AutoNexus.csproj", "{3CFC7313-B51E-474D-A58B-FF75BA88BA27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IncFinder", "Plugins\IncFinder\IncFinder.csproj", "{8F1B7E21-31AE-4CAD-8404-621D9BFDB69A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemFinder", "Plugins\ItemFinder\ItemFinder.csproj", "{8F1B7E21-31AE-4CAD-8404-621D9BFDB69A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientStatAnnouncer", "Plugins\ClientStatAnnouncer\ClientStatAnnouncer.csproj", "{1E34B942-0CDA-47B6-997C-26F45D485EF6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapRipper", "Plugins\MapRipper\MapRipper.csproj", "{B25E0331-5518-46B7-9C96-A7A295CD1683}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReconnectMod", "Plugins\ReconnectMod\ReconnectMod.csproj", "{4C3C0EDD-9345-4AF6-A1BA-63C4F6E0AD92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{B25E0331-5518-46B7-9C96-A7A295CD1683}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B25E0331-5518-46B7-9C96-A7A295CD1683}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B25E0331-5518-46B7-9C96-A7A295CD1683}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C3C0EDD-9345-4AF6-A1BA-63C4F6E0AD92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C3C0EDD-9345-4AF6-A1BA-63C4F6E0AD92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C3C0EDD-9345-4AF6-A1BA-63C4F6E0AD92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C3C0EDD-9345-4AF6-A1BA-63C4F6E0AD92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,6 +76,7 @@ Global
 		{8F1B7E21-31AE-4CAD-8404-621D9BFDB69A} = {03A97CEB-D1F4-4BD0-A708-8151EF71A8D7}
 		{1E34B942-0CDA-47B6-997C-26F45D485EF6} = {03A97CEB-D1F4-4BD0-A708-8151EF71A8D7}
 		{B25E0331-5518-46B7-9C96-A7A295CD1683} = {03A97CEB-D1F4-4BD0-A708-8151EF71A8D7}
+		{4C3C0EDD-9345-4AF6-A1BA-63C4F6E0AD92} = {03A97CEB-D1F4-4BD0-A708-8151EF71A8D7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6FBB91BA-4ACE-4EF7-A74D-4ACF86B1B6A0}

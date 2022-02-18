@@ -12,15 +12,15 @@ namespace Lib_K_Relay.GameData
     /// <summary>
     ///     Represents a mapping of short identifiers to data structures for a given data type
     /// </summary>
-    /// <typeparam name="IDType">The type of the short identifier (e.g. byte, ushort, string)</typeparam>
-    /// <typeparam name="DataType">The type of the data structure (e.g. PacketStructure, EnemyStructure, ServerStructure)</typeparam>
-    public class GameDataMap<IDType, DataType> where DataType : IDataStructure<IDType>
+    /// <typeparam name="TIdType">The type of the short identifier (e.g. byte, ushort, string)</typeparam>
+    /// <typeparam name="TDataType">The type of the data structure (e.g. PacketStructure, EnemyStructure, ServerStructure)</typeparam>
+    public class GameDataMap<TIdType, TDataType> where TDataType : IDataStructure<TIdType>
     {
         private GameDataMap()
         {
         }
 
-        public GameDataMap(Dictionary<IDType, DataType> map)
+        public GameDataMap(Dictionary<TIdType, TDataType> map)
         {
             Map = map;
         }
@@ -28,7 +28,7 @@ namespace Lib_K_Relay.GameData
         /// <summary>
         ///     Map of short id -> data structure
         /// </summary>
-        public Dictionary<IDType, DataType> Map { get; }
+        public Dictionary<TIdType, TDataType> Map { get; }
 
         /// <summary>
         ///     Selects a data structure from this map by short identifier
@@ -37,7 +37,7 @@ namespace Lib_K_Relay.GameData
         /// <returns>The data structure</returns>
         /// <example>GameData.Packets.ByID(255) -> Packet: UNKNOWN (255)</example>
         /// <example>GameData.Servers.ByID("USW") -> Server: USWest/USW</example>
-        public DataType ByID(IDType id)
+        public TDataType ByID(TIdType id)
         {
             return Map[id];
         }
@@ -49,7 +49,7 @@ namespace Lib_K_Relay.GameData
         /// <returns>The data structure</returns>
         /// <example>GameData.Packets.ByName("UNKNOWN") -> Packet: UNKNOWN(255)</example>
         /// <example>GameData.Servers.ByName("USWest") -> Server: USWest/USW</example>
-        public DataType ByName(string name)
+        public TDataType ByName(string name)
         {
             return Map.First(e => e.Value.Name == name).Value;
         }
@@ -60,7 +60,7 @@ namespace Lib_K_Relay.GameData
         /// <param name="f">The expression to evaluate</param>
         /// <returns>The data structure</returns>
         /// <example>GameData.Packets.Match(p => p.Type == typeof(NewTickPacket)) -> NEWTICK (47)</example>
-        public DataType Match(Func<DataType, bool> f)
+        public TDataType Match(Func<TDataType, bool> f)
         {
             return Map.First(e => f(e.Value)).Value;
         }

@@ -66,19 +66,17 @@ namespace Lib_K_Relay.Networking
             packet.Port = 2050;
         }
 
-        private void OnGotoCommand(Client client, string command, string[] args)
+        public void OnGotoCommand(Client client, string command, string[] args)
         {
-            if (args.Length == 1)
-            {
-                var reconnect = (ReconnectPacket)Packet.Create(PacketType.RECONNECT);
-                reconnect.Host = args[0];
-                reconnect.Port = 2050;
-                reconnect.GameId = -2;
-                reconnect.Name = "Realm";
-                reconnect.Key = new byte[0];
-                reconnect.KeyTime = -1;
-                SendReconnect(client, reconnect);
-            }
+            if (args.Length != 1) return;
+            var reconnect = (ReconnectPacket)Packet.Create(PacketType.RECONNECT);
+            reconnect.Host = args[0];
+            reconnect.Port = 2050;
+            reconnect.GameId = -2;
+            reconnect.Name = "Realm";
+            reconnect.Key = new byte[0];
+            reconnect.KeyTime = -1;
+            SendReconnect(client, reconnect);
         }
 
         private void OnIpCommand(Client client, string command, string[] args)

@@ -14,13 +14,13 @@ namespace Lib_K_Relay.GameData.DataStructures
                 .ForEach(server =>
                 {
                     var s = new ServerStructure(server);
-                    map[s.ID] = s;
+                    map[s.Id] = s;
                 });
 
             return map;
         }
 
-        public static readonly Dictionary<string, string> abbreviations = new Dictionary<string, string>
+        public static readonly Dictionary<string, string> Abbreviations = new Dictionary<string, string>
         {
             { "USEast2", "USE2" },
             { "EUEast", "EUE" },
@@ -52,7 +52,7 @@ namespace Lib_K_Relay.GameData.DataStructures
         /// </summary>
         public string Abbreviation;
 
-        public string ID => Abbreviation;
+        public string Id => Abbreviation;
 
         /// <summary>
         ///     The IP address of this server
@@ -62,7 +62,7 @@ namespace Lib_K_Relay.GameData.DataStructures
         public ServerStructure(XElement server)
         {
             Name = server.ElemDefault("Name", "");
-            Abbreviation = abbreviations.ContainsKey(Name) ? abbreviations[Name] : "";
+            Abbreviation = Abbreviations.ContainsKey(Name) ? Abbreviations[Name] : "";
             Address = /*Dns.GetHostEntry(*/server.ElemDefault("DNS", "") /*).AddressList[0].ToString()*/;
         }
 

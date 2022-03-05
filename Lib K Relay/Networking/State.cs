@@ -11,14 +11,14 @@ namespace Lib_K_Relay.Networking
         public byte[] ConRealKey = new byte[0];
         public string ConTargetAddress = Proxy.DefaultServer;
         public ushort ConTargetPort = 2050;
-        public string GUID;
+        public string Guid;
 
         public Dictionary<string, dynamic> States;
 
         public State(Client client, string id)
         {
             Client = client;
-            GUID = id;
+            Guid = id;
             States = new Dictionary<string, dynamic>();
         }
 

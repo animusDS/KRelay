@@ -2,9 +2,9 @@
 {
     public class ActivePetUpdateRequestPacket : Packet
     {
-        public const int FOLLOW_PET = 1;
-        public const int UNFOLLOW_PET = 2;
-        public const int RELEASE_PET = 3;
+        public const int FollowPet = 1;
+        public const int UnfollowPet = 2;
+        public const int ReleasePet = 3;
 
         public int CommandId;
         public uint PetId;

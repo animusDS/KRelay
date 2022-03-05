@@ -48,7 +48,7 @@ namespace Lib_K_Relay.GameData.DataStructures
         /// <summary>
         ///     Maximum HP this object can have (for walls/other destructible terrain)
         /// </summary>
-        public ushort MaxHP;
+        public ushort MaxHp;
 
         /// <summary>
         ///     What kind of object this is
@@ -88,17 +88,17 @@ namespace Lib_K_Relay.GameData.DataStructures
         /// <summary>
         ///     How much XP is granted when destroying this object
         /// </summary>
-        public float XPMult;
+        public float XpMult;
 
         public ObjectStructure(XElement obj)
         {
-            ID = (ushort)obj.AttrDefault("type", "0x0").ParseHex();
+            Id = (ushort)obj.AttrDefault("type", "0x0").ParseHex();
 
             // if this errors you need to add a new entry to the krObject.Class enum
             ObjectClass = obj.ElemDefault("Class", "GameObject");
 
-            MaxHP = (ushort)obj.ElemDefault("MaxHitPoints", "0").ParseHex();
-            XPMult = obj.ElemDefault("XpMult", "0").ParseFloat();
+            MaxHp = (ushort)obj.ElemDefault("MaxHitPoints", "0").ParseHex();
+            XpMult = obj.ElemDefault("XpMult", "0").ParseFloat();
 
             Static = obj.HasElement("Static");
             OccupySquare = obj.HasElement("OccupySquare");
@@ -125,7 +125,7 @@ namespace Lib_K_Relay.GameData.DataStructures
         /// <summary>
         ///     The numerical identifier for this object
         /// </summary>
-        public ushort ID { get; }
+        public ushort Id { get; }
 
         /// <summary>
         ///     The text identifier for this object
@@ -141,7 +141,7 @@ namespace Lib_K_Relay.GameData.DataStructures
                 .ForEach(obj =>
                 {
                     var o = new ObjectStructure(obj);
-                    map[o.ID] = o;
+                    map[o.Id] = o;
                 });
 
             return map;
@@ -149,7 +149,7 @@ namespace Lib_K_Relay.GameData.DataStructures
 
         public override string ToString()
         {
-            return string.Format("Object: {0} (0x{1:X})", Name, ID);
+            return string.Format("Object: {0} (0x{1:X})", Name, Id);
         }
     }
 }

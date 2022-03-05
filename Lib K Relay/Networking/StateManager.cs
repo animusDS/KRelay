@@ -58,8 +58,9 @@ namespace Lib_K_Relay.Networking
 
             State resolvedState = null;
 
-            foreach (var state in _proxy.States.Values.Where(state => state.AccountId == client.PlayerData.AccountId))
-                resolvedState = state;
+            foreach (var state in _proxy.States.Values)
+                if (state.AccountId == client.PlayerData.AccountId)
+                    resolvedState = state;
 
             if (resolvedState == null)
             {

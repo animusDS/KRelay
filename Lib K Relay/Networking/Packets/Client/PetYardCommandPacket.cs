@@ -4,9 +4,9 @@ namespace Lib_K_Relay.Networking.Packets.Client
 {
     public class PetYardCommandPacket : Packet
     {
-        public const int UPGRADE_PET_YARD = 1;
-        public const int FEED_PET = 2;
-        public const int FUSE_PET = 3;
+        public const int UpgradePetYard = 1;
+        public const int FeedPet = 2;
+        public const int FusePet = 3;
 
         public byte CommandId;
         public byte Currency;

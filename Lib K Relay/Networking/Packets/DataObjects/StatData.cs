@@ -58,106 +58,14 @@ namespace Lib_K_Relay.Networking.Packets.DataObjects
 
     public class StatsType
     {
-        private readonly byte _mType;
-
-        private StatsType(byte type)
-        {
-            _mType = type;
-        }
-
-        public bool IsUtf()
-        {
-            return (int)this == (int)Stats.Name
-                   || (int)this == (int)Stats.AccountId
-                   || (int)this == (int)Stats.OwnerAccountId
-                   || (int)this == (int)Stats.GuildName
-                   || (int)this == (int)Stats.PetName
-                   || (int)this == (int)Stats.GraveAccountId
-                   || (int)this == (int)Stats.Texture
-                   || (int)this == (int)Stats.DungeonMod;
-        }
-
-        public static implicit operator StatsType(int type)
-        {
-            if (type > byte.MaxValue) throw new Exception("Not a valid StatData number.");
-
-            return new StatsType((byte)type);
-        }
-
-        public static implicit operator StatsType(byte type)
-        {
-            return new StatsType(type);
-        }
-
-        public static bool operator ==(StatsType type, int id)
-        {
-            if (id > byte.MaxValue) throw new Exception("Not a valid StatData number.");
-
-            return type._mType == (byte)id;
-        }
-
-        public static bool operator ==(StatsType type, byte id)
-        {
-            return type._mType == id;
-        }
-
-        public static bool operator !=(StatsType type, int id)
-        {
-            if (id > byte.MaxValue) throw new Exception("Not a valid StatData number.");
-
-            return type._mType != (byte)id;
-        }
-
-        public static bool operator !=(StatsType type, byte id)
-        {
-            return type._mType != id;
-        }
-
-        public static bool operator ==(StatsType type, StatsType id)
-        {
-            return type._mType == id._mType;
-        }
-
-        public static bool operator !=(StatsType type, StatsType id)
-        {
-            return type._mType != id._mType;
-        }
-
-        public static implicit operator int(StatsType type)
-        {
-            return type._mType;
-        }
-
-        public static implicit operator byte(StatsType type)
-        {
-            return type._mType;
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (!(obj is StatsType type)) return false;
-
-            return this == type;
-        }
-
-        public override string ToString()
-        {
-            return _mType.ToString();
-        }
-        
         // this int casting nonsense is so scuffed...
         public enum Stats
         {
-            MaximumHP = 0,
-            HP = 1,
+            MaximumHp = 0,
+            Hp = 1,
             Size = 2,
-            MaximumMP = 3,
-            MP = 4,
+            MaximumMp = 3,
+            Mp = 4,
             NextLevelExperience = 5,
             Experience = 6,
             Level = 7,
@@ -261,8 +169,6 @@ namespace Lib_K_Relay.Networking.Packets.DataObjects
             // i think the star bg is unused, but still exported?
             ChallengerStarBg = 100,
             PlayerId = 101,
-            ProjectileSpeedMult = 102,
-            ProjectileLifeMult = 103,
             OpenedAtTimestamp = 104,
             ExaltedAttack = 105,
             ExaltedDefense = 106,
@@ -275,17 +181,106 @@ namespace Lib_K_Relay.Networking.Packets.DataObjects
             ExaltationDamageMultiplier = 113,
             PetOwnerAccountId = 114,
             GraveAccountId = 115,
-            QuickslotItem1 = 116,
-            QuickslotItem2 = 117,
-            QuickslotItem3 = 118,
-            HasQuickslotUpgrade = 119,
-            Forgefire = 120,
+            QuickSlotItem1 = 116,
+            QuickSlotItem2 = 117,
+            QuickSlotItem3 = 118,
+            HasQuickSlotUpgrade = 119,
+            ForgeFire = 120,
             DungeonMod = 121,
             Unknown122 = 122,
             Unknown123 = 123,
             Unknown124 = 124,
             Unknown125 = 125,
             Unknown126 = 126
+        }
+
+        private readonly byte _mType;
+
+        private StatsType(byte type)
+        {
+            _mType = type;
+        }
+
+        public bool IsUtf()
+        {
+            return (int)this == (int)Stats.Name
+                   || (int)this == (int)Stats.AccountId
+                   || (int)this == (int)Stats.OwnerAccountId
+                   || (int)this == (int)Stats.GuildName
+                   || (int)this == (int)Stats.PetName
+                   || (int)this == (int)Stats.GraveAccountId
+                   || (int)this == (int)Stats.Texture
+                   || (int)this == (int)Stats.DungeonMod;
+        }
+
+        public static implicit operator StatsType(int type)
+        {
+            if (type > byte.MaxValue) throw new Exception("Not a valid StatData number.");
+
+            return new StatsType((byte)type);
+        }
+
+        public static implicit operator StatsType(byte type)
+        {
+            return new StatsType(type);
+        }
+
+        public static bool operator ==(StatsType type, int id)
+        {
+            if (id > byte.MaxValue) throw new Exception("Not a valid StatData number.");
+
+            return !(type is null) && type._mType == (byte)id;
+        }
+
+        public static bool operator ==(StatsType type, byte id)
+        {
+            return !(type is null) && type._mType == id;
+        }
+
+        public static bool operator !=(StatsType type, int id)
+        {
+            if (id > byte.MaxValue) throw new Exception("Not a valid StatData number.");
+
+            return !(type is null) && type._mType != (byte)id;
+        }
+
+        public static bool operator !=(StatsType type, byte id) => !(type is null) && type._mType != id;
+
+        public static bool operator ==(StatsType type, StatsType id)
+        {
+            return !(id is null) && !(type is null) && type._mType == id._mType;
+        }
+
+        public static bool operator !=(StatsType type, StatsType id)
+        {
+            return !(id is null) && !(type is null) && type._mType != id._mType;
+        }
+
+        public static implicit operator int(StatsType type)
+        {
+            return type._mType;
+        }
+
+        public static implicit operator byte(StatsType type)
+        {
+            return type._mType;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is StatsType type)) return false;
+
+            return this == type;
+        }
+
+        public override string ToString()
+        {
+            return _mType.ToString();
         }
     }
 }

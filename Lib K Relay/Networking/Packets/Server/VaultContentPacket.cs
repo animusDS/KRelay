@@ -6,16 +6,16 @@ namespace Lib_K_Relay.Networking.Packets.Server
     {
         public short CurrentPotionMax;
         public int[] GiftContents;
+        public int GiftItemCount;
+        public byte[] GiftItemString;
         public short NextPotionMax;
         public int[] PotionContents;
+        public int PotionItemCount;
         public short PotionUpgradeCost;
         public bool UnknownBool;
-        public int VaultItemCount;
-        public int GiftItemCount;
-        public int PotionItemCount;
-        public byte[] VaultItemString;
-        public byte[] GiftItemString;
         public int[] VaultContents;
+        public int VaultItemCount;
+        public byte[] VaultItemString;
         public short VaultUpgradeCost;
 
         public override PacketType Type => PacketType.VAULT_CONTENT;

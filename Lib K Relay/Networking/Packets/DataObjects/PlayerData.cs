@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Text;
 using Lib_K_Relay.Networking.Packets.Server;
 using Lib_K_Relay.Utilities;
@@ -45,6 +44,7 @@ namespace Lib_K_Relay.Networking.Packets.DataObjects
         public bool HasXpBoost;
         public int Health;
         public int HealthBonus;
+        public string PetName;
         public int[] Inventory = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
         public int LegendaryRank;
         public int Level = 1;
@@ -60,9 +60,9 @@ namespace Lib_K_Relay.Networking.Packets.DataObjects
         public string Name;
         public bool NameChosen;
         public int OwnerObjectId;
+        public string OwnerAccountId;
+        public string GraveAccountId;
         public Location Pos = new Location();
-        public float ProjectileLifeMultiplier;
-        public float ProjectileSpeedMultiplier;
         public int[] Quickslots = { -1, -1, -1 };
         public int RealmGold;
         public int SinkLevel;
@@ -76,13 +76,14 @@ namespace Lib_K_Relay.Networking.Packets.DataObjects
         public int Unknown24;
         public int Unknown25;
         public int Texture1;
+        public string Texture;
         public int Texture2;
         public int Texture3;
         public int Vitality;
         public int VitalityBonus;
         public int Wisdom;
         public int WisdomBonus;
-        public int Xp;
+        public string Xp;
         public int XpBoostTime;
         public int XpGoal;
         public string DungeonMod;
@@ -133,23 +134,23 @@ namespace Lib_K_Relay.Networking.Packets.DataObjects
         {
             switch (id)
             {
-                case (int)StatsType.Stats.MaximumHP:
+                case (int)StatsType.Stats.MaximumHp:
                     MaxHealth = intValue;
                     break;
-                case (int)StatsType.Stats.HP:
+                case (int)StatsType.Stats.Hp:
                     Health = intValue;
                     break;
-                case (int)StatsType.Stats.MaximumMP:
+                case (int)StatsType.Stats.MaximumMp:
                     MaxMana = intValue;
                     break;
-                case (int)StatsType.Stats.MP:
+                case (int)StatsType.Stats.Mp:
                     Mana = intValue;
                     break;
                 case (int)StatsType.Stats.NextLevelExperience:
                     XpGoal = intValue;
                     break;
                 case (int)StatsType.Stats.Experience:
-                    Xp = intValue;
+                    Xp = stringValue;
                     break;
                 case (int)StatsType.Stats.Level:
                     Level = intValue;
@@ -217,6 +218,9 @@ namespace Lib_K_Relay.Networking.Packets.DataObjects
                 case (int)StatsType.Stats.AccountFame:
                     AccountFame = intValue;
                     break;
+                case (int)StatsType.Stats.PetName:
+                    PetName = stringValue;
+                    break;
                 case (int)StatsType.Stats.HealthBonus:
                     HealthBonus = intValue;
                     break;
@@ -256,6 +260,12 @@ namespace Lib_K_Relay.Networking.Packets.DataObjects
                 case (int)StatsType.Stats.GuildName:
                     GuildName = stringValue;
                     break;
+                case (int)StatsType.Stats.GraveAccountId:
+                    GraveAccountId = stringValue;
+                    break;
+                case (int)StatsType.Stats.OwnerAccountId:
+                    OwnerAccountId = stringValue;
+                    break;
                 case (int)StatsType.Stats.GuildRank:
                     GuildRank = intValue;
                     break;
@@ -280,12 +290,12 @@ namespace Lib_K_Relay.Networking.Packets.DataObjects
                 case (int)StatsType.Stats.Size:
                     Size = intValue;
                     break;
-                case (int)StatsType.Stats.QuickslotItem1:
-                case (int)StatsType.Stats.QuickslotItem2:
-                case (int)StatsType.Stats.QuickslotItem3:
-                    Quickslots[id - (int)StatsType.Stats.QuickslotItem1] = intValue;
+                case (int)StatsType.Stats.QuickSlotItem1:
+                case (int)StatsType.Stats.QuickSlotItem2:
+                case (int)StatsType.Stats.QuickSlotItem3:
+                    Quickslots[id - (int)StatsType.Stats.QuickSlotItem1] = intValue;
                     break;
-                case (int)StatsType.Stats.HasQuickslotUpgrade:
+                case (int)StatsType.Stats.HasQuickSlotUpgrade:
                     HasQuickslotUpgrade = intValue > 0;
                     break;
                 case (int)StatsType.Stats.ExaltedAttack:
@@ -321,7 +331,7 @@ namespace Lib_K_Relay.Networking.Packets.DataObjects
                 case (int)StatsType.Stats.FortuneTokens:
                     FortuneTokens = intValue;
                     break;
-                case (int)StatsType.Stats.Forgefire:
+                case (int)StatsType.Stats.ForgeFire:
                     Forgefire = intValue;
                     break;
                 case (int)StatsType.Stats.ExaltationDamageMultiplier:
@@ -329,12 +339,6 @@ namespace Lib_K_Relay.Networking.Packets.DataObjects
                     break;
                 case (int)StatsType.Stats.SupporterPoints:
                     SupporterPoints = intValue;
-                    break;
-                case (int)StatsType.Stats.ProjectileSpeedMult:
-                    ProjectileSpeedMultiplier = intValue / 1000f;
-                    break;
-                case (int)StatsType.Stats.ProjectileLifeMult:
-                    ProjectileLifeMultiplier = intValue / 1000f;
                     break;
                 case (int)StatsType.Stats.AltTextureIndex:
                     AltTextureIndex = intValue;
@@ -356,6 +360,9 @@ namespace Lib_K_Relay.Networking.Packets.DataObjects
                     break;
                 case (int)StatsType.Stats.DungeonMod:
                     DungeonMod = stringValue;
+                    break;
+                case (int)StatsType.Stats.Texture:
+                    Texture = stringValue;
                     break;
                 case (int)StatsType.Stats.Unknown122:
                     Unknown122 = intValue;

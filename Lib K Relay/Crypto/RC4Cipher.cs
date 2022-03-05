@@ -3,25 +3,25 @@ using System.Text;
 
 namespace Lib_K_Relay.Crypto
 {
-    public class RC4Cipher
+    public class Rc4Cipher
     {
-        private static readonly int STATE_LENGTH = 256;
+        private static readonly int StateLength = 256;
 
-        private byte[] engineState;
-        private byte[] workingKey;
-        private int x;
-        private int y;
+        private byte[] _engineState;
+        private byte[] _workingKey;
+        private int _x;
+        private int _y;
 
-        public RC4Cipher(byte[] key)
+        public Rc4Cipher(byte[] key)
         {
-            workingKey = key;
-            SetKey(workingKey);
+            _workingKey = key;
+            SetKey(_workingKey);
         }
 
-        public RC4Cipher(string hexString)
+        public Rc4Cipher(string hexString)
         {
-            workingKey = HexStringToBytes(hexString);
-            SetKey(workingKey);
+            _workingKey = HexStringToBytes(hexString);
+            SetKey(_workingKey);
         }
 
         public void Cipher(byte[] packet)
@@ -31,7 +31,7 @@ namespace Lib_K_Relay.Crypto
 
         public void Reset()
         {
-            SetKey(workingKey);
+            SetKey(_workingKey);
         }
 
         private void ProcessBytes(byte[] input, int inOff, int length, byte[] output, int outOff)
@@ -45,39 +45,39 @@ namespace Lib_K_Relay.Crypto
             */
             for (var i = 0; i < length; i++)
             {
-                x = (x + 1) & 0xff;
-                y = (engineState[x] + y) & 0xff;
+                _x = (_x + 1) & 0xff;
+                _y = (_engineState[_x] + _y) & 0xff;
 
                 // swap
-                var tmp = engineState[x];
-                engineState[x] = engineState[y];
-                engineState[y] = tmp;
+                var tmp = _engineState[_x];
+                _engineState[_x] = _engineState[_y];
+                _engineState[_y] = tmp;
 
                 // xor
                 output[i + outOff] = (byte)(input[i + inOff]
-                                            ^ engineState[(engineState[x] + engineState[y]) & 0xff]);
+                                            ^ _engineState[(_engineState[_x] + _engineState[_y]) & 0xff]);
             }
         }
 
         private void SetKey(byte[] keyBytes)
         {
-            workingKey = keyBytes;
-            x = y = 0;
+            _workingKey = keyBytes;
+            _x = _y = 0;
 
-            if (engineState == null) engineState = new byte[STATE_LENGTH];
+            if (_engineState == null) _engineState = new byte[StateLength];
 
             // reset the state of the engine
-            for (var i = 0; i < STATE_LENGTH; i++) engineState[i] = (byte)i;
+            for (var i = 0; i < StateLength; i++) _engineState[i] = (byte)i;
 
             int i1 = 0, i2 = 0;
 
-            for (var i = 0; i < STATE_LENGTH; i++)
+            for (var i = 0; i < StateLength; i++)
             {
-                i2 = ((keyBytes[i1] & 0xff) + engineState[i] + i2) & 0xff;
+                i2 = ((keyBytes[i1] & 0xff) + _engineState[i] + i2) & 0xff;
                 // do the byte-swap inline
-                var tmp = engineState[i];
-                engineState[i] = engineState[i2];
-                engineState[i2] = tmp;
+                var tmp = _engineState[i];
+                _engineState[i] = _engineState[i2];
+                _engineState[i2] = tmp;
                 i1 = (i1 + 1) % keyBytes.Length;
             }
         }

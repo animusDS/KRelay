@@ -25,7 +25,7 @@ namespace Lib_K_Relay.GameData.DataStructures
             T14,
             T15,
 
-            UT = 255
+            Ut = 255
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Lib_K_Relay.GameData.DataStructures
         /// <summary>
         ///     How much MP the item costs to use (for abilities)
         /// </summary>
-        public byte MPCost;
+        public byte MpCost;
 
         /// <summary>
         ///     Number of projectiles emitted per shot
@@ -86,19 +86,19 @@ namespace Lib_K_Relay.GameData.DataStructures
         /// <summary>
         ///     How much extra XP is awarded with this item equipped
         /// </summary>
-        public byte XPBonus;
+        public byte XpBonus;
 
         // todo: Forge properties
         public ItemStructure(XElement item)
         {
-            ID = (ushort)item.AttrDefault("type", "0x0").ParseHex();
-            Tier = item.HasElement("Tier") ? (Tiers)item.Element("Tier").Value.ParseInt() : Tiers.UT;
+            Id = (ushort)item.AttrDefault("type", "0x0").ParseHex();
+            Tier = item.HasElement("Tier") ? (Tiers)item.Element("Tier").Value.ParseInt() : Tiers.Ut;
             SlotType = (byte)item.ElemDefault("SlotType", "0").ParseInt();
             RateOfFire = item.ElemDefault("RateOfFire", "1").ParseFloat();
             FeedPower = (uint)item.ElemDefault("feedPower", "0").ParseInt();
             BagType = (byte)item.ElemDefault("BagType", "0").ParseInt();
-            MPCost = (byte)item.ElemDefault("MpCost", "0").ParseInt();
-            XPBonus = (byte)item.ElemDefault("XPBonus", "0").ParseInt();
+            MpCost = (byte)item.ElemDefault("MpCost", "0").ParseInt();
+            XpBonus = (byte)item.ElemDefault("XPBonus", "0").ParseInt();
 
             Soulbound = item.HasElement("Soulbound");
             Usable = item.HasElement("Usable");
@@ -113,7 +113,7 @@ namespace Lib_K_Relay.GameData.DataStructures
         /// <summary>
         ///     The numerical identifier for this item
         /// </summary>
-        public ushort ID { get; }
+        public ushort Id { get; }
 
         /// <summary>
         ///     The text identifier for this item
@@ -130,7 +130,7 @@ namespace Lib_K_Relay.GameData.DataStructures
                 .ForEach(item =>
                 {
                     var i = new ItemStructure(item);
-                    map[i.ID] = i;
+                    map[i.Id] = i;
                 });
 
             return map;
@@ -138,7 +138,7 @@ namespace Lib_K_Relay.GameData.DataStructures
 
         public override string ToString()
         {
-            return string.Format("Item: {0} (0x{1:X})", Name, ID);
+            return string.Format("Item: {0} (0x{1:X})", Name, Id);
         }
     }
 }

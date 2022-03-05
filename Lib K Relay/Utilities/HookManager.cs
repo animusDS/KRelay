@@ -13,7 +13,7 @@ namespace Lib_K_Relay.Utilities
 
         #region Mouse events
 
-        private static event MouseEventHandler s_MouseMove;
+        private static event MouseEventHandler SMouseMove;
 
         /// <summary>
         ///     Occurs when the mouse pointer is moved.
@@ -23,17 +23,17 @@ namespace Lib_K_Relay.Utilities
             add
             {
                 EnsureSubscribedToGlobalMouseEvents();
-                s_MouseMove += value;
+                SMouseMove += value;
             }
 
             remove
             {
-                s_MouseMove -= value;
+                SMouseMove -= value;
                 TryUnsubscribeFromGlobalMouseEvents();
             }
         }
 
-        private static event EventHandler<MouseEventExtArgs> s_MouseMoveExt;
+        private static event EventHandler<MouseEventExtArgs> SMouseMoveExt;
 
         /// <summary>
         ///     Occurs when the mouse pointer is moved.
@@ -47,17 +47,17 @@ namespace Lib_K_Relay.Utilities
             add
             {
                 EnsureSubscribedToGlobalMouseEvents();
-                s_MouseMoveExt += value;
+                SMouseMoveExt += value;
             }
 
             remove
             {
-                s_MouseMoveExt -= value;
+                SMouseMoveExt -= value;
                 TryUnsubscribeFromGlobalMouseEvents();
             }
         }
 
-        private static event MouseEventHandler s_MouseClick;
+        private static event MouseEventHandler SMouseClick;
 
         /// <summary>
         ///     Occurs when a click was performed by the mouse.
@@ -67,16 +67,16 @@ namespace Lib_K_Relay.Utilities
             add
             {
                 EnsureSubscribedToGlobalMouseEvents();
-                s_MouseClick += value;
+                SMouseClick += value;
             }
             remove
             {
-                s_MouseClick -= value;
+                SMouseClick -= value;
                 TryUnsubscribeFromGlobalMouseEvents();
             }
         }
 
-        private static event EventHandler<MouseEventExtArgs> s_MouseClickExt;
+        private static event EventHandler<MouseEventExtArgs> SMouseClickExt;
 
         /// <summary>
         ///     Occurs when a click was performed by the mouse.
@@ -90,16 +90,16 @@ namespace Lib_K_Relay.Utilities
             add
             {
                 EnsureSubscribedToGlobalMouseEvents();
-                s_MouseClickExt += value;
+                SMouseClickExt += value;
             }
             remove
             {
-                s_MouseClickExt -= value;
+                SMouseClickExt -= value;
                 TryUnsubscribeFromGlobalMouseEvents();
             }
         }
 
-        private static event MouseEventHandler s_MouseDown;
+        private static event MouseEventHandler SMouseDown;
 
         /// <summary>
         ///     Occurs when the mouse a mouse button is pressed.
@@ -109,16 +109,16 @@ namespace Lib_K_Relay.Utilities
             add
             {
                 EnsureSubscribedToGlobalMouseEvents();
-                s_MouseDown += value;
+                SMouseDown += value;
             }
             remove
             {
-                s_MouseDown -= value;
+                SMouseDown -= value;
                 TryUnsubscribeFromGlobalMouseEvents();
             }
         }
 
-        private static event MouseEventHandler s_MouseUp;
+        private static event MouseEventHandler SMouseUp;
 
         /// <summary>
         ///     Occurs when a mouse button is released.
@@ -128,16 +128,16 @@ namespace Lib_K_Relay.Utilities
             add
             {
                 EnsureSubscribedToGlobalMouseEvents();
-                s_MouseUp += value;
+                SMouseUp += value;
             }
             remove
             {
-                s_MouseUp -= value;
+                SMouseUp -= value;
                 TryUnsubscribeFromGlobalMouseEvents();
             }
         }
 
-        private static event MouseEventHandler s_MouseWheel;
+        private static event MouseEventHandler SMouseWheel;
 
         /// <summary>
         ///     Occurs when the mouse wheel moves.
@@ -147,17 +147,17 @@ namespace Lib_K_Relay.Utilities
             add
             {
                 EnsureSubscribedToGlobalMouseEvents();
-                s_MouseWheel += value;
+                SMouseWheel += value;
             }
             remove
             {
-                s_MouseWheel -= value;
+                SMouseWheel -= value;
                 TryUnsubscribeFromGlobalMouseEvents();
             }
         }
 
 
-        private static event MouseEventHandler s_MouseDoubleClick;
+        private static event MouseEventHandler SMouseDoubleClick;
 
         //The double click event will not be provided directly from hook.
         //To fire the double click event wee need to monitor mouse up event and when it occures 
@@ -172,10 +172,10 @@ namespace Lib_K_Relay.Utilities
             add
             {
                 EnsureSubscribedToGlobalMouseEvents();
-                if (s_MouseDoubleClick == null)
+                if (SMouseDoubleClick == null)
                 {
                     //We create a timer to monitor interval between two clicks
-                    s_DoubleClickTimer = new Timer
+                    _sDoubleClickTimer = new Timer
                     {
                         //This interval will be set to the value we retrive from windows. This is a windows setting from contro planel.
                         Interval = GetDoubleClickTime(),
@@ -183,25 +183,25 @@ namespace Lib_K_Relay.Utilities
                         Enabled = false
                     };
                     //We define the callback function for the timer
-                    s_DoubleClickTimer.Tick += DoubleClickTimeElapsed;
+                    _sDoubleClickTimer.Tick += DoubleClickTimeElapsed;
                     //We start to monitor mouse up event.
                     MouseUp += OnMouseUp;
                 }
 
-                s_MouseDoubleClick += value;
+                SMouseDoubleClick += value;
             }
             remove
             {
-                if (s_MouseDoubleClick != null)
+                if (SMouseDoubleClick != null)
                 {
-                    s_MouseDoubleClick -= value;
-                    if (s_MouseDoubleClick == null)
+                    SMouseDoubleClick -= value;
+                    if (SMouseDoubleClick == null)
                     {
                         //Stop monitoring mouse up
                         MouseUp -= OnMouseUp;
                         //Dispose the timer
-                        s_DoubleClickTimer.Tick -= DoubleClickTimeElapsed;
-                        s_DoubleClickTimer = null;
+                        _sDoubleClickTimer.Tick -= DoubleClickTimeElapsed;
+                        _sDoubleClickTimer = null;
                     }
                 }
 
@@ -210,16 +210,16 @@ namespace Lib_K_Relay.Utilities
         }
 
         //This field remembers mouse button pressed because in addition to the short interval it must be also the same button.
-        private static MouseButtons s_PrevClickedButton;
+        private static MouseButtons _sPrevClickedButton;
 
         //The timer to monitor time interval between two clicks.
-        private static Timer s_DoubleClickTimer;
+        private static Timer _sDoubleClickTimer;
 
         private static void DoubleClickTimeElapsed(object sender, EventArgs e)
         {
             //Timer is alapsed and no second click ocuured
-            s_DoubleClickTimer.Enabled = false;
-            s_PrevClickedButton = MouseButtons.None;
+            _sDoubleClickTimer.Enabled = false;
+            _sPrevClickedButton = MouseButtons.None;
         }
 
         /// <summary>
@@ -233,20 +233,20 @@ namespace Lib_K_Relay.Utilities
             //This should not heppen
             if (e.Clicks < 1) return;
             //If the secon click heppened on the same button
-            if (e.Button.Equals(s_PrevClickedButton))
+            if (e.Button.Equals(_sPrevClickedButton))
             {
-                if (s_MouseDoubleClick != null)
+                if (SMouseDoubleClick != null)
                     //Fire double click
-                    s_MouseDoubleClick.Invoke(null, e);
+                    SMouseDoubleClick.Invoke(null, e);
                 //Stop timer
-                s_DoubleClickTimer.Enabled = false;
-                s_PrevClickedButton = MouseButtons.None;
+                _sDoubleClickTimer.Enabled = false;
+                _sPrevClickedButton = MouseButtons.None;
             }
             else
             {
                 //If it was the firts click start the timer
-                s_DoubleClickTimer.Enabled = true;
-                s_PrevClickedButton = e.Button;
+                _sDoubleClickTimer.Enabled = true;
+                _sPrevClickedButton = e.Button;
             }
         }
 
@@ -256,7 +256,7 @@ namespace Lib_K_Relay.Utilities
 
         #region Keyboard events
 
-        private static event KeyPressEventHandler s_KeyPress;
+        private static event KeyPressEventHandler SKeyPress;
 
         /// <summary>
         ///     Occurs when a key is pressed.
@@ -279,16 +279,16 @@ namespace Lib_K_Relay.Utilities
             add
             {
                 EnsureSubscribedToGlobalKeyboardEvents();
-                s_KeyPress += value;
+                SKeyPress += value;
             }
             remove
             {
-                s_KeyPress -= value;
+                SKeyPress -= value;
                 TryUnsubscribeFromGlobalKeyboardEvents();
             }
         }
 
-        private static event KeyEventHandler s_KeyUp;
+        private static event KeyEventHandler SKeyUp;
 
         /// <summary>
         ///     Occurs when a key is released.
@@ -298,16 +298,16 @@ namespace Lib_K_Relay.Utilities
             add
             {
                 EnsureSubscribedToGlobalKeyboardEvents();
-                s_KeyUp += value;
+                SKeyUp += value;
             }
             remove
             {
-                s_KeyUp -= value;
+                SKeyUp -= value;
                 TryUnsubscribeFromGlobalKeyboardEvents();
             }
         }
 
-        private static event KeyEventHandler s_KeyDown;
+        private static event KeyEventHandler SKeyDown;
 
         /// <summary>
         ///     Occurs when a key is preseed.
@@ -317,11 +317,11 @@ namespace Lib_K_Relay.Utilities
             add
             {
                 EnsureSubscribedToGlobalKeyboardEvents();
-                s_KeyDown += value;
+                SKeyDown += value;
             }
             remove
             {
-                s_KeyDown -= value;
+                SKeyDown -= value;
                 TryUnsubscribeFromGlobalKeyboardEvents();
             }
         }

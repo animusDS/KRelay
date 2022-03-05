@@ -1,8 +1,8 @@
 ﻿namespace Lib_K_Relay.GameData.DataStructures
 {
-    public interface IDataStructure<IDType>
+    public interface IDataStructure<TIdType>
     {
         string Name { get; }
-        IDType ID { get; }
+        TIdType Id { get; }
     }
 }

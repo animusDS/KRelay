@@ -2,9 +2,9 @@
 {
     public class PasswordPromptPacket : Packet
     {
-        public const int SIGN_IN = 2;
-        public const int SEND_EMAIL_AND_SIGN_IN = 3;
-        public const int REGISTER = 4;
+        public const int SignIn = 2;
+        public const int SendEmailAndSignIn = 3;
+        public const int Register = 4;
 
         public int CleanPasswordStatus;
 

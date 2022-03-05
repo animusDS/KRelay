@@ -55,13 +55,7 @@ namespace Lib_K_Relay.Utilities
             var className = site.ReflectedType.Name;
 
             Log("Error", "An exception was thrown within {0} at {1} {2}",
-                caller, className + "." + methodName,
-#if DEBUG
-                e);
-
-#else
-                e.Message);
-#endif
+                caller, className + "." + methodName, e);
         }
 
         /// <summary>
@@ -73,7 +67,7 @@ namespace Lib_K_Relay.Utilities
         {
             if (sender.Length > 13) sender = sender.Substring(0, 13);
             sender += "]";
-            Console.WriteLine("[{0,-15} {1}", sender, message);
+            Console.WriteLine(@"[{0,-15} {1}", sender, message);
         }
 
         /// <summary>
@@ -92,7 +86,7 @@ namespace Lib_K_Relay.Utilities
         ///     Starts a message loop for the specified form instance and displays the form.
         /// </summary>
         /// <param name="gui">Form to be shown</param>
-        public static void ShowGUI(Form gui)
+        public static void ShowGui(Form gui)
         {
             gui.Shown += (s, e) =>
             {
@@ -109,9 +103,9 @@ namespace Lib_K_Relay.Utilities
         /// </summary>
         /// <param name="settingsObject">Settings to base the form off of</param>
         /// <param name="title">Title of the form to be shown</param>
-        public static void ShowGenericSettingsGUI(dynamic settingsObject, string title)
+        public static void ShowGenericSettingsGui(dynamic settingsObject, string title)
         {
-            ShowGUI(new FrmGenericSettings(settingsObject, title));
+            ShowGui(new FrmGenericSettings(settingsObject, title));
         }
 
         /// <summary>
@@ -137,11 +131,10 @@ namespace Lib_K_Relay.Utilities
         /// <param name="color">Color of the notification text</param>
         /// <param name="extra"> ? </param>
         /// <param name="picture"> Image to show in log message </param>
-        /// 
         /// <returns></returns>
         public static NotificationPacket CreateNotification(string message, int picture = 1562)
         {
-            var notif = (NotificationPacket) Packet.Create(PacketType.NOTIFICATION);
+            var notif = (NotificationPacket)Packet.Create(PacketType.NOTIFICATION);
             notif.Message = message;
             notif.PictureType = picture;
             notif.Effect = 8;

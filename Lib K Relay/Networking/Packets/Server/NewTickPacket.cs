@@ -4,8 +4,8 @@ namespace Lib_K_Relay.Networking.Packets.Server
 {
     public class NewTickPacket : Packet
     {
-        public ushort ServerLastRTTMS;
-        public int ServerRealTimeMS;
+        public ushort ServerLastRttms;
+        public int ServerRealTimeMs;
         public Status[] Statuses;
         public int TickId;
         public int TickTime;
@@ -16,8 +16,8 @@ namespace Lib_K_Relay.Networking.Packets.Server
         {
             TickId = r.ReadInt32();
             TickTime = r.ReadInt32();
-            ServerRealTimeMS = r.ReadInt32();
-            ServerLastRTTMS = r.ReadUInt16();
+            ServerRealTimeMs = r.ReadInt32();
+            ServerLastRttms = r.ReadUInt16();
 
             Statuses = new Status[r.ReadInt16()];
             for (var i = 0; i < Statuses.Length; i++) Statuses[i] = (Status)new Status().Read(r);
@@ -27,8 +27,8 @@ namespace Lib_K_Relay.Networking.Packets.Server
         {
             w.Write(TickId);
             w.Write(TickTime);
-            w.Write(ServerRealTimeMS);
-            w.Write(ServerLastRTTMS);
+            w.Write(ServerRealTimeMs);
+            w.Write(ServerLastRttms);
 
             w.Write((short)Statuses.Length);
             foreach (var s in Statuses) s.Write(w);

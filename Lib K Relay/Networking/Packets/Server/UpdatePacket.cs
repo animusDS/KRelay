@@ -1,15 +1,14 @@
-﻿using System;
-using Lib_K_Relay.Networking.Packets.DataObjects;
+﻿using Lib_K_Relay.Networking.Packets.DataObjects;
 
 namespace Lib_K_Relay.Networking.Packets.Server
 {
     public class UpdatePacket : Packet
     {
         public int[] Drops;
+        public byte LevelType;
         public Entity[] NewObjs;
         public Location Position;
         public Tile[] Tiles;
-        public byte LevelType;
 
         public override PacketType Type => PacketType.UPDATE;
 

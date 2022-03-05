@@ -99,7 +99,7 @@ namespace Lib_K_Relay
             var guid = key.Length == 0 ? "n/a" : Encoding.UTF8.GetString(key);
 
             var newState = new State(client, Guid.NewGuid().ToString("n"));
-            States[newState.GUID] = newState;
+            States[newState.Guid] = newState;
 
             if (guid != "n/a")
             {
@@ -136,7 +136,7 @@ namespace Lib_K_Relay
         /// <param name="callback">Callback to be registered</param>
         public void HookPacket(PacketType type, PacketHandler callback)
         {
-            if (GameData.GameData.Packets.ByName(type.ToString()).ID == 255)
+            if (GameData.GameData.Packets.ByName(type.ToString()).Id == 255)
                 throw new InvalidOperationException("[Plugin Error] A plugin attempted to register callback " +
                                                     callback.GetMethodInfo().ReflectedType + "." +
                                                     callback.Method.Name +

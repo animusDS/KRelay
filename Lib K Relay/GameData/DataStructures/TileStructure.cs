@@ -14,7 +14,7 @@ namespace Lib_K_Relay.GameData.DataStructures
                 .ForEach(tile =>
                 {
                     var t = new TileStructure(tile);
-                    map[t.ID] = t;
+                    map[t.Id] = t;
                 });
 
             return map;
@@ -23,7 +23,7 @@ namespace Lib_K_Relay.GameData.DataStructures
         /// <summary>
         ///     The numerical identifier of this tile
         /// </summary>
-        public ushort ID { get; }
+        public ushort Id { get; }
 
         /// <summary>
         ///     Whether this tile can be walked on
@@ -57,7 +57,7 @@ namespace Lib_K_Relay.GameData.DataStructures
 
         public TileStructure(XElement tile)
         {
-            ID = (ushort)tile.AttrDefault("type", "0x0").ParseHex();
+            Id = (ushort)tile.AttrDefault("type", "0x0").ParseHex();
             NoWalk = tile.HasElement("NoWalk");
             Speed = tile.ElemDefault("Speed", "1").ParseFloat();
             Sink = tile.HasElement("Sink");
@@ -69,7 +69,7 @@ namespace Lib_K_Relay.GameData.DataStructures
 
         public override string ToString()
         {
-            return string.Format("Tile: {0} (0x{1:X})", Name, ID);
+            return string.Format("Tile: {0} (0x{1:X})", Name, Id);
         }
     }
 }

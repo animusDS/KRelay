@@ -18,12 +18,12 @@ namespace Lib_K_Relay.GameData.DataStructures
                 .ForEach(packet =>
                 {
                     var p = new PacketStructure(packet);
-                    map[p.ID] = p;
+                    map[p.Id] = p;
                 });
 
             map[255] = new PacketStructure
             {
-                ID = 255,
+                Id = 255,
                 PacketType = PacketType.UNKNOWN,
                 Type = typeof(Packet)
             };
@@ -31,15 +31,15 @@ namespace Lib_K_Relay.GameData.DataStructures
             return map;
         }
 
-        private static readonly Type tPacket = typeof(Packet);
+        private static readonly Type Packet = typeof(Packet);
 
-        private static readonly Type[] packetTypes = Assembly.GetAssembly(typeof(Proxy)).GetTypes()
-            .Where(t => tPacket.IsAssignableFrom(t)).ToArray();
+        private static readonly Type[] PacketTypes = Assembly.GetAssembly(typeof(Proxy)).GetTypes()
+            .Where(t => Packet.IsAssignableFrom(t)).ToArray();
 
         /// <summary>
         ///     The numerical identifier for this packet
         /// </summary>
-        public byte ID { get; private set; }
+        public byte Id { get; private set; }
 
         public string Name => PacketType.ToString();
 
@@ -55,11 +55,11 @@ namespace Lib_K_Relay.GameData.DataStructures
 
         public PacketStructure(XElement packet)
         {
-            ID = (byte)packet.AttrDefault("type", "").ParseInt();
+            Id = (byte)packet.AttrDefault("type", "").ParseInt();
             if (!Enum.TryParse(packet.AttrDefault("id", ""), out PacketType)) PacketType = PacketType.UNKNOWN;
 
             Type = null;
-            foreach (var pType in packetTypes)
+            foreach (var pType in PacketTypes)
             {
                 var t = (Activator.CreateInstance(pType) as Packet).Type;
                 if (t == PacketType) Type = pType;
@@ -68,7 +68,7 @@ namespace Lib_K_Relay.GameData.DataStructures
 
         public override string ToString()
         {
-            return string.Format("Packet: {0} (0x{1:X})", PacketType, ID);
+            return string.Format("Packet: {0} (0x{1:X})", PacketType, Id);
         }
     }
 }

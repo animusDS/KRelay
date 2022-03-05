@@ -61,7 +61,7 @@ namespace Lib_K_Relay.Networking
                 client.State.ConRealKey = packet.Key;
 
             // Tell the client to connect to the proxy
-            packet.Key = Encoding.UTF8.GetBytes(client.State.GUID);
+            packet.Key = Encoding.UTF8.GetBytes(client.State.Guid);
             packet.Host = "127.0.0.1";
             packet.Port = 2050;
         }
@@ -93,7 +93,7 @@ namespace Lib_K_Relay.Networking
                 if (GameData.GameData.Servers.Map.ContainsKey(args[0].ToUpper()))
                 {
                     var reconnect = (ReconnectPacket)Packet.Create(PacketType.RECONNECT);
-                    reconnect.Host = GameData.GameData.Servers.ByID(args[0].ToUpper()).Address;
+                    reconnect.Host = GameData.GameData.Servers.ById(args[0].ToUpper()).Address;
                     reconnect.Port = 2050;
                     reconnect.GameId = -2;
                     reconnect.Name = "Nexus";
@@ -116,7 +116,7 @@ namespace Lib_K_Relay.Networking
             client.State.ConTargetAddress = host;
             client.State.ConTargetPort = port;
             client.State.ConRealKey = key;
-            reconnect.Key = Encoding.UTF8.GetBytes(client.State.GUID);
+            reconnect.Key = Encoding.UTF8.GetBytes(client.State.Guid);
             reconnect.Host = "127.0.0.1";
             reconnect.Port = 2050;
 

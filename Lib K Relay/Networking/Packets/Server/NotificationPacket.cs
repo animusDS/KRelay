@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Lib_K_Relay.Networking.Packets.Server
+﻿namespace Lib_K_Relay.Networking.Packets.Server
 {
     public class NotificationPacket : Packet
     {

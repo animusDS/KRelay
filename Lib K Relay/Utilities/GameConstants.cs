@@ -108,14 +108,14 @@ namespace Lib_K_Relay.Utilities
         FireOrbBuff = 32
     }
 
-    public struct ARGB
+    public struct Argb
     {
         public byte A;
         public byte B;
         public byte G;
         public byte R;
 
-        public ARGB(uint argb)
+        public Argb(uint argb)
         {
             A = (byte)((argb & 0xff000000) >> 24);
             R = (byte)((argb & 0x00ff0000) >> 16);
@@ -123,7 +123,7 @@ namespace Lib_K_Relay.Utilities
             B = (byte)((argb & 0x000000ff) >> 0);
         }
 
-        public ARGB(byte a, byte r, byte g, byte b)
+        public Argb(byte a, byte r, byte g, byte b)
         {
             A = a;
             R = r;
@@ -131,9 +131,9 @@ namespace Lib_K_Relay.Utilities
             B = b;
         }
 
-        public static ARGB Read(PacketReader r)
+        public static Argb Read(PacketReader r)
         {
-            var ret = new ARGB();
+            var ret = new Argb();
             ret.A = r.ReadByte();
             ret.R = r.ReadByte();
             ret.G = r.ReadByte();

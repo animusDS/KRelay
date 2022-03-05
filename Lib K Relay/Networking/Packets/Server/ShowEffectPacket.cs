@@ -5,7 +5,7 @@ namespace Lib_K_Relay.Networking.Packets.Server
 {
     public class ShowEffectPacket : Packet
     {
-        public ARGB Color;
+        public Argb Color;
         public double Duration;
         public EffectType EffectType;
         public byte ExportBitMask;
@@ -31,7 +31,7 @@ namespace Lib_K_Relay.Networking.Packets.Server
                 X = (ExportBitMask & 8) != 0 ? r.ReadSingle() : 0,
                 Y = (ExportBitMask & 16) != 0 ? r.ReadSingle() : 0
             };
-            Color = (ExportBitMask & 1) != 0 ? ARGB.Read(r) : new ARGB(0xFFFFFFFF);
+            Color = (ExportBitMask & 1) != 0 ? Argb.Read(r) : new Argb(0xFFFFFFFF);
             Duration = (ExportBitMask & 32) != 0 ? r.ReadSingle() : 1;
             Size = (ExportBitMask & 128) != 0 ? r.ReadByte() : 100;
         }

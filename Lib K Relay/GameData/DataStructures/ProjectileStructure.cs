@@ -53,7 +53,7 @@ namespace Lib_K_Relay.GameData.DataStructures
 
         public ProjectileStructure(XElement projectile)
         {
-            ID = (byte)projectile.AttrDefault("id", "0").ParseInt();
+            Id = (byte)projectile.AttrDefault("id", "0").ParseInt();
             Damage = projectile.ElemDefault("Damage", "0").ParseInt();
             Speed = projectile.ElemDefault("Speed", "0").ParseFloat() / 10000f;
             Size = projectile.ElemDefault("Size", "0").ParseInt();
@@ -87,7 +87,7 @@ namespace Lib_K_Relay.GameData.DataStructures
         /// <summary>
         ///     The numerical identifier for this projectile
         /// </summary>
-        public byte ID { get; }
+        public byte Id { get; }
 
         /// <summary>
         ///     The text identifier for this projectile
@@ -96,7 +96,7 @@ namespace Lib_K_Relay.GameData.DataStructures
 
         public override string ToString()
         {
-            return $"Projectile: {Name} (0x{ID:X})";
+            return $"Projectile: {Name} (0x{Id:X})";
         }
     }
 }

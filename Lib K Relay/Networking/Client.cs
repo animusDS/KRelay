@@ -18,14 +18,14 @@ namespace Lib_K_Relay.Networking
         private readonly PacketBuffer _clientBuffer = new PacketBuffer();
         private readonly TcpClient _clientConnection;
         private readonly object _clientLock = new object();
-        private readonly RC4Cipher _clientReceiveState = new RC4Cipher(ClientKey);
-        private readonly RC4Cipher _clientSendState = new RC4Cipher(ServerKey);
+        private readonly Rc4Cipher _clientReceiveState = new Rc4Cipher(ClientKey);
+        private readonly Rc4Cipher _clientSendState = new Rc4Cipher(ServerKey);
         private readonly NetworkStream _clientStream;
         private readonly Proxy _proxy;
         private readonly PacketBuffer _serverBuffer = new PacketBuffer();
         private readonly object _serverLock = new object();
-        private readonly RC4Cipher _serverReceiveState = new RC4Cipher(ServerKey);
-        private readonly RC4Cipher _serverSendState = new RC4Cipher(ClientKey);
+        private readonly Rc4Cipher _serverReceiveState = new Rc4Cipher(ServerKey);
+        private readonly Rc4Cipher _serverSendState = new Rc4Cipher(ClientKey);
         private bool _closed;
         private TcpClient _serverConnection;
         private NetworkStream _serverStream;
@@ -174,7 +174,8 @@ namespace Lib_K_Relay.Networking
                 new Tuple<NetworkStream, PacketBuffer>(stream, buffer));
         }
 
-        [SuppressMessage("ReSharper.DPA", "DPA0002: Excessive memory allocations in SOH", MessageId = "type: System.String; size: 131MB")]
+        [SuppressMessage("ReSharper.DPA", "DPA0002: Excessive memory allocations in SOH",
+            MessageId = "type: System.String; size: 131MB")]
         private void RemoteRead(IAsyncResult ar)
         {
             var stream = (ar.AsyncState as Tuple<NetworkStream, PacketBuffer>)?.Item1;

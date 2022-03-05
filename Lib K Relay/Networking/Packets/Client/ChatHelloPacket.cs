@@ -2,20 +2,20 @@
 {
     public class ChatHelloPacket : Packet
     {
-        public string AccountID;
+        public string AccountId;
         public string Token;
 
         public override PacketType Type => PacketType.CHAT_HELLO_MSG;
 
         public override void Read(PacketReader r)
         {
-            AccountID = r.ReadString();
+            AccountId = r.ReadString();
             Token = r.ReadString();
         }
 
         public override void Write(PacketWriter w)
         {
-            w.Write(AccountID);
+            w.Write(AccountId);
             w.Write(Token);
         }
     }

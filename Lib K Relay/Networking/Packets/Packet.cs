@@ -29,14 +29,14 @@ namespace Lib_K_Relay.Networking.Packets
         {
             var st = GameData.GameData.Packets.ByName(type.ToString());
             var packet = (Packet)Activator.CreateInstance(st.Type);
-            packet.Id = st.ID;
+            packet.Id = st.Id;
             return packet;
         }
 
         public static T Create<T>(PacketType type)
         {
             var packet = (Packet)Activator.CreateInstance(typeof(T));
-            packet.Id = GameData.GameData.Packets.ByName(type.ToString()).ID;
+            packet.Id = GameData.GameData.Packets.ByName(type.ToString()).Id;
             return (T)Convert.ChangeType(packet, typeof(T));
         }
 
@@ -53,7 +53,7 @@ namespace Lib_K_Relay.Networking.Packets
                 var id = r.ReadByte();
 
                 // 254 = We don't have the packet defined, log data and send back
-                var st = GameData.GameData.Packets.ByID(
+                var st = GameData.GameData.Packets.ById(
                     !GameData.GameData.Packets.Map.ContainsKey(id) ? (byte)254 : id);
                 var type = st.Type;
 
@@ -105,7 +105,7 @@ namespace Lib_K_Relay.Networking.Packets
                                              BindingFlags.Instance);
 
             var s = new StringBuilder();
-            s.Append(Type + " [" + GameData.GameData.Packets.ByName(Type.ToString()).ID + "] \nPacket Structure:\n{");
+            s.Append(Type + " [" + GameData.GameData.Packets.ByName(Type.ToString()).Id + "] \nPacket Structure:\n{");
             foreach (var f in fields) s.Append("\n  " + f.Name + " => " + f.FieldType.Name);
 
             s.Append("\n}");
@@ -115,6 +115,8 @@ namespace Lib_K_Relay.Networking.Packets
 
     public enum PacketType
     {
+        // ReSharper disable InconsistentNaming IdentifierTypo
+
         UNKNOWN,
         FAILURE,
         CREATE_SUCCESS,
@@ -220,10 +222,6 @@ namespace Lib_K_Relay.Networking.Packets
         SHOOTACK_COUNTER,
         CHANGE_ALLY_SHOOT,
         CREEP_MOVE_MESSAGE,
-        REFINEMENTRESULT,
-        BUYREFINEMENT,
-        KENSEIDASH,
-        KENSEIDASHACK,
 
         // not actually needed, chat server is separate
         CHAT_HELLO_MSG,

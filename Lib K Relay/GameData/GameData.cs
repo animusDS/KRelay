@@ -37,7 +37,7 @@ namespace Lib_K_Relay.GameData
         /// <returns>The data structure</returns>
         /// <example>GameData.Packets.ByID(255) -> Packet: UNKNOWN (255)</example>
         /// <example>GameData.Servers.ByID("USW") -> Server: USWest/USW</example>
-        public TDataType ByID(TIdType id)
+        public TDataType ById(TIdType id)
         {
             return Map[id];
         }
@@ -96,46 +96,46 @@ namespace Lib_K_Relay.GameData
         static GameData()
         {
             // Cache the XMLs because Resource accessors are slow
-            RawObjectsXML = Resources.Objects;
-            RawPacketsXML = Resources.Packets;
-            RawTilesXML = Resources.Tiles;
-            RawServersXML = Resources.Servers;
+            RawObjectsXml = Resources.Objects;
+            RawPacketsXml = Resources.Packets;
+            RawTilesXml = Resources.Tiles;
+            RawServersXml = Resources.Servers;
         }
 
-        public static string RawObjectsXML { get; }
-        public static string RawPacketsXML { get; }
-        public static string RawTilesXML { get; }
-        public static string RawServersXML { get; }
+        public static string RawObjectsXml { get; }
+        public static string RawPacketsXml { get; }
+        public static string RawTilesXml { get; }
+        public static string RawServersXml { get; }
 
         public static void Load()
         {
             Parallel.Invoke(
                 () =>
                 {
-                    Items = new GameDataMap<ushort, ItemStructure>(ItemStructure.Load(XDocument.Parse(RawObjectsXML)));
+                    Items = new GameDataMap<ushort, ItemStructure>(ItemStructure.Load(XDocument.Parse(RawObjectsXml)));
                     PluginUtils.Log("GameData", "Mapped {0} items.", Items.Map.Count);
                 },
                 () =>
                 {
-                    Tiles = new GameDataMap<ushort, TileStructure>(TileStructure.Load(XDocument.Parse(RawTilesXML)));
+                    Tiles = new GameDataMap<ushort, TileStructure>(TileStructure.Load(XDocument.Parse(RawTilesXml)));
                     PluginUtils.Log("GameData", "Mapped {0} tiles.", Tiles.Map.Count);
                 },
                 () =>
                 {
                     Objects = new GameDataMap<ushort, ObjectStructure>(
-                        ObjectStructure.Load(XDocument.Parse(RawObjectsXML)));
+                        ObjectStructure.Load(XDocument.Parse(RawObjectsXml)));
                     PluginUtils.Log("GameData", "Mapped {0} objects.", Objects.Map.Count);
                 },
                 () =>
                 {
                     Packets = new GameDataMap<byte, PacketStructure>(
-                        PacketStructure.Load(XDocument.Parse(RawPacketsXML)));
+                        PacketStructure.Load(XDocument.Parse(RawPacketsXml)));
                     PluginUtils.Log("GameData", "Mapped {0} packets.", Packets.Map.Count);
                 },
                 () =>
                 {
                     Servers = new GameDataMap<string, ServerStructure>(
-                        ServerStructure.Load(XDocument.Parse(RawServersXML)));
+                        ServerStructure.Load(XDocument.Parse(RawServersXml)));
                     PluginUtils.Log("GameData", "Mapped {0} servers.", Servers.Map.Count);
                 });
 

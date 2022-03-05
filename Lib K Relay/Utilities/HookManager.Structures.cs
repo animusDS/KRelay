@@ -28,7 +28,7 @@ namespace Lib_K_Relay.Utilities
         ///     The MSLLHOOKSTRUCT structure contains information about a low-level keyboard input event.
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
-        private struct MouseLLHookStruct
+        private struct MouseLlHookStruct
         {
             /// <summary>
             ///     Specifies a Point structure that contains the X- and Y-coordinates of the cursor, in screen coordinates.

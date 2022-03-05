@@ -9,12 +9,12 @@ namespace Lib_K_Relay.Networking.Packets.Server
         public short NextPotionMax;
         public int[] PotionContents;
         public short PotionUpgradeCost;
-        public bool Unknown1;
-        public int Unknown2;
-        public int Unknown3;
-        public int Unknown4;
-        public byte[] Unknown5;
-        public byte[] Unknown6;
+        public bool UnknownBool;
+        public int VaultItemCount;
+        public int GiftItemCount;
+        public int PotionItemCount;
+        public byte[] VaultItemString;
+        public byte[] GiftItemString;
         public int[] VaultContents;
         public short VaultUpgradeCost;
 
@@ -22,10 +22,10 @@ namespace Lib_K_Relay.Networking.Packets.Server
 
         public override void Read(PacketReader r)
         {
-            Unknown1 = r.ReadBoolean();
-            Unknown2 = CompressedInt.Read(r);
-            Unknown3 = CompressedInt.Read(r);
-            Unknown4 = CompressedInt.Read(r);
+            UnknownBool = r.ReadBoolean();
+            VaultItemCount = CompressedInt.Read(r);
+            GiftItemCount = CompressedInt.Read(r);
+            PotionItemCount = CompressedInt.Read(r);
 
             VaultContents = new int[CompressedInt.Read(r)];
             for (var i = 0; i < VaultContents.Length; i++)
@@ -43,16 +43,16 @@ namespace Lib_K_Relay.Networking.Packets.Server
             PotionUpgradeCost = r.ReadInt16();
             CurrentPotionMax = r.ReadInt16();
             NextPotionMax = r.ReadInt16();
-            Unknown5 = r.ReadBytes(r.ReadInt16());
-            Unknown6 = r.ReadBytes(r.ReadInt16());
+            VaultItemString = r.ReadBytes(r.ReadInt16());
+            GiftItemString = r.ReadBytes(r.ReadInt16());
         }
 
         public override void Write(PacketWriter w)
         {
-            w.Write(Unknown1);
-            CompressedInt.Write(w, Unknown2);
-            CompressedInt.Write(w, Unknown3);
-            CompressedInt.Write(w, Unknown4);
+            w.Write(UnknownBool);
+            CompressedInt.Write(w, VaultItemCount);
+            CompressedInt.Write(w, GiftItemCount);
+            CompressedInt.Write(w, PotionItemCount);
 
             CompressedInt.Write(w, VaultContents.Length);
             foreach (var i in VaultContents)
@@ -71,10 +71,10 @@ namespace Lib_K_Relay.Networking.Packets.Server
             w.Write(CurrentPotionMax);
             w.Write(NextPotionMax);
 
-            w.Write((short)Unknown5.Length);
-            w.Write(Unknown5);
-            w.Write((short)Unknown6.Length);
-            w.Write(Unknown6);
+            w.Write((short)VaultItemString.Length);
+            w.Write(VaultItemString);
+            w.Write((short)GiftItemString.Length);
+            w.Write(GiftItemString);
         }
     }
 }

@@ -9,13 +9,16 @@
         public string DisplayName;
         public uint GameOpenedTime;
         public int Height;
+        public int Width;
         public short MaxPlayers;
         public string Name;
         public string RealmName;
         public uint Seed;
         public bool ShowDisplays;
-        public byte Unknown;
-        public int Width;
+        public string[] DungeonModifiers;
+        public bool UnknownBool;
+        public int UnknownInt;
+
 
         public override PacketType Type => PacketType.MAPINFO;
 
@@ -33,6 +36,10 @@
             ShowDisplays = r.ReadBoolean();
             MaxPlayers = r.ReadInt16();
             GameOpenedTime = r.ReadUInt32();
+            BuildVersion = r.ReadString();
+            DungeonModifiers = r.ReadString().Split(';');
+            UnknownBool = r.ReadBoolean();
+            UnknownInt = r.ReadInt32();
         }
 
         public override void Write(PacketWriter w)
@@ -49,6 +56,10 @@
             w.Write(ShowDisplays);
             w.Write(MaxPlayers);
             w.Write(GameOpenedTime);
+            w.Write(BuildVersion);
+            w.Write(string.Join(";", DungeonModifiers));
+            w.Write(UnknownBool);
+            w.Write(UnknownInt);
         }
     }
 }

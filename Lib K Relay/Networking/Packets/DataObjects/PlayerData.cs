@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Text;
 using Lib_K_Relay.Networking.Packets.Server;
 using Lib_K_Relay.Utilities;
@@ -25,7 +26,6 @@ namespace Lib_K_Relay.Networking.Packets.DataObjects
         public int DefenseBonus;
         public int Dexterity;
         public int DexterityBonus;
-        public string DungeonMod;
         public int[] Effects = new int[2];
         public float ExaltationDamageMultiplier;
         public int ExaltedAttack;
@@ -72,11 +72,12 @@ namespace Lib_K_Relay.Networking.Packets.DataObjects
         public int Stars;
         public int SupporterPoints;
         public bool TeleportAllowed;
-        public int Texture;
+        public int Unknown23;
+        public int Unknown24;
+        public int Unknown25;
         public int Texture1;
         public int Texture2;
-        public string Unknown121;
-        public string Unknown123;
+        public int Texture3;
         public int Vitality;
         public int VitalityBonus;
         public int Wisdom;
@@ -84,6 +85,12 @@ namespace Lib_K_Relay.Networking.Packets.DataObjects
         public int Xp;
         public int XpBoostTime;
         public int XpGoal;
+        public string DungeonMod;
+        public int Unknown122;
+        public int Unknown123;
+        public int Unknown124;
+        public int Unknown125;
+        public int Unknown126;
 
         public PlayerData(int ownerObjectId)
         {
@@ -126,229 +133,244 @@ namespace Lib_K_Relay.Networking.Packets.DataObjects
         {
             switch (id)
             {
-                case (int)Stats.MaximumHP:
+                case (int)StatsType.Stats.MaximumHP:
                     MaxHealth = intValue;
                     break;
-                case (int)Stats.HP:
+                case (int)StatsType.Stats.HP:
                     Health = intValue;
                     break;
-                case (int)Stats.MaximumMP:
+                case (int)StatsType.Stats.MaximumMP:
                     MaxMana = intValue;
                     break;
-                case (int)Stats.MP:
+                case (int)StatsType.Stats.MP:
                     Mana = intValue;
                     break;
-                case (int)Stats.NextLevelExperience:
+                case (int)StatsType.Stats.NextLevelExperience:
                     XpGoal = intValue;
                     break;
-                case (int)Stats.Experience:
+                case (int)StatsType.Stats.Experience:
                     Xp = intValue;
                     break;
-                case (int)Stats.Level:
+                case (int)StatsType.Stats.Level:
                     Level = intValue;
                     break;
-                case (int)Stats.Inventory0:
-                case (int)Stats.Inventory1:
-                case (int)Stats.Inventory2:
-                case (int)Stats.Inventory3:
-                case (int)Stats.Inventory4:
-                case (int)Stats.Inventory5:
-                case (int)Stats.Inventory6:
-                case (int)Stats.Inventory7:
-                case (int)Stats.Inventory8:
-                case (int)Stats.Inventory9:
-                case (int)Stats.Inventory10:
-                case (int)Stats.Inventory11:
-                    Inventory[id - (int)Stats.Inventory0] = intValue;
+                case (int)StatsType.Stats.Inventory0:
+                case (int)StatsType.Stats.Inventory1:
+                case (int)StatsType.Stats.Inventory2:
+                case (int)StatsType.Stats.Inventory3:
+                case (int)StatsType.Stats.Inventory4:
+                case (int)StatsType.Stats.Inventory5:
+                case (int)StatsType.Stats.Inventory6:
+                case (int)StatsType.Stats.Inventory7:
+                case (int)StatsType.Stats.Inventory8:
+                case (int)StatsType.Stats.Inventory9:
+                case (int)StatsType.Stats.Inventory10:
+                case (int)StatsType.Stats.Inventory11:
+                    Inventory[id - (int)StatsType.Stats.Inventory0] = intValue;
                     break;
-                case (int)Stats.Backpack0:
-                case (int)Stats.Backpack1:
-                case (int)Stats.Backpack2:
-                case (int)Stats.Backpack3:
-                case (int)Stats.Backpack4:
-                case (int)Stats.Backpack5:
-                case (int)Stats.Backpack6:
-                case (int)Stats.Backpack7:
-                    Backpack[id - (int)Stats.Backpack0] = intValue;
+                case (int)StatsType.Stats.Backpack0:
+                case (int)StatsType.Stats.Backpack1:
+                case (int)StatsType.Stats.Backpack2:
+                case (int)StatsType.Stats.Backpack3:
+                case (int)StatsType.Stats.Backpack4:
+                case (int)StatsType.Stats.Backpack5:
+                case (int)StatsType.Stats.Backpack6:
+                case (int)StatsType.Stats.Backpack7:
+                    Backpack[id - (int)StatsType.Stats.Backpack0] = intValue;
                     break;
-                case (int)Stats.Attack:
+                case (int)StatsType.Stats.Attack:
                     Attack = intValue;
                     break;
-                case (int)Stats.Defense:
+                case (int)StatsType.Stats.Defense:
                     Defense = intValue;
                     break;
-                case (int)Stats.Speed:
+                case (int)StatsType.Stats.Speed:
                     Speed = intValue;
                     break;
-                case (int)Stats.Vitality:
+                case (int)StatsType.Stats.Vitality:
                     Vitality = intValue;
                     break;
-                case (int)Stats.Wisdom:
+                case (int)StatsType.Stats.Wisdom:
                     Wisdom = intValue;
                     break;
-                case (int)Stats.Dexterity:
+                case (int)StatsType.Stats.Dexterity:
                     Dexterity = intValue;
                     break;
-                case (int)Stats.Effects:
+                case (int)StatsType.Stats.Effects:
                     Effects[0] = intValue;
                     break;
-                case (int)Stats.Effects2:
+                case (int)StatsType.Stats.Effects2:
                     Effects[1] = intValue;
                     break;
-                case (int)Stats.Stars:
+                case (int)StatsType.Stats.Stars:
                     Stars = intValue;
                     break;
-                case (int)Stats.Name:
+                case (int)StatsType.Stats.Name:
                     Name = stringValue;
                     break;
-                case (int)Stats.Credits:
+                case (int)StatsType.Stats.Credits:
                     RealmGold = intValue;
                     break;
-                case (int)Stats.AccountId:
+                case (int)StatsType.Stats.AccountId:
                     AccountId = stringValue;
                     break;
-                case (int)Stats.AccountFame:
+                case (int)StatsType.Stats.AccountFame:
                     AccountFame = intValue;
                     break;
-                case (int)Stats.HealthBonus:
+                case (int)StatsType.Stats.HealthBonus:
                     HealthBonus = intValue;
                     break;
-                case (int)Stats.ManaBonus:
+                case (int)StatsType.Stats.ManaBonus:
                     ManaBonus = intValue;
                     break;
-                case (int)Stats.AttackBonus:
+                case (int)StatsType.Stats.AttackBonus:
                     AttackBonus = intValue;
                     break;
-                case (int)Stats.DefenseBonus:
+                case (int)StatsType.Stats.DefenseBonus:
                     DefenseBonus = intValue;
                     break;
-                case (int)Stats.SpeedBonus:
+                case (int)StatsType.Stats.SpeedBonus:
                     SpeedBonus = intValue;
                     break;
-                case (int)Stats.VitalityBonus:
+                case (int)StatsType.Stats.VitalityBonus:
                     VitalityBonus = intValue;
                     break;
-                case (int)Stats.WisdomBonus:
+                case (int)StatsType.Stats.WisdomBonus:
                     WisdomBonus = intValue;
                     break;
-                case (int)Stats.DexterityBonus:
+                case (int)StatsType.Stats.DexterityBonus:
                     DexterityBonus = intValue;
                     break;
-                case (int)Stats.NameChosen:
+                case (int)StatsType.Stats.NameChosen:
                     NameChosen = intValue > 0;
                     break;
-                case (int)Stats.CharacterFame:
+                case (int)StatsType.Stats.CharacterFame:
                     CharacterFame = intValue;
                     break;
-                case (int)Stats.CharacterFameGoal:
+                case (int)StatsType.Stats.CharacterFameGoal:
                     CharacterFameGoal = intValue;
                     break;
-                case (int)Stats.LegendaryRank:
+                case (int)StatsType.Stats.LegendaryRank:
                     LegendaryRank = intValue;
                     break;
-                case (int)Stats.GuildName:
+                case (int)StatsType.Stats.GuildName:
                     GuildName = stringValue;
                     break;
-                case (int)Stats.GuildRank:
+                case (int)StatsType.Stats.GuildRank:
                     GuildRank = intValue;
                     break;
-                case (int)Stats.Breath:
+                case (int)StatsType.Stats.Breath:
                     Breath = intValue;
                     break;
-                case (int)Stats.HasBackpack:
+                case (int)StatsType.Stats.HasBackpack:
                     HasBackpack = intValue > 0;
                     break;
-                case (int)Stats.Texture:
-                    Texture = intValue;
+                case (int)StatsType.Stats.Unknown23:
+                    Unknown23 = intValue;
                     break;
-                case (int)Stats.SinkLevel:
+                case (int)StatsType.Stats.Unknown24:
+                    Unknown24 = intValue;
+                    break;
+                case (int)StatsType.Stats.Unknown25:
+                    Unknown25 = intValue;
+                    break;
+                case (int)StatsType.Stats.SinkLevel:
                     SinkLevel = intValue;
                     break;
-                case (int)Stats.Size:
+                case (int)StatsType.Stats.Size:
                     Size = intValue;
                     break;
-                case (int)Stats.QuickslotItem1:
-                case (int)Stats.QuickslotItem2:
-                case (int)Stats.QuickslotItem3:
-                    Quickslots[id - (int)Stats.QuickslotItem1] = intValue;
+                case (int)StatsType.Stats.QuickslotItem1:
+                case (int)StatsType.Stats.QuickslotItem2:
+                case (int)StatsType.Stats.QuickslotItem3:
+                    Quickslots[id - (int)StatsType.Stats.QuickslotItem1] = intValue;
                     break;
-                case (int)Stats.HasQuickslotUpgrade:
+                case (int)StatsType.Stats.HasQuickslotUpgrade:
                     HasQuickslotUpgrade = intValue > 0;
                     break;
-                case (int)Stats.ExaltedAttack:
+                case (int)StatsType.Stats.ExaltedAttack:
                     ExaltedAttack = intValue;
                     break;
-                case (int)Stats.ExaltedDefense:
+                case (int)StatsType.Stats.ExaltedDefense:
                     ExaltedDefense = intValue;
                     break;
-                case (int)Stats.ExaltedDexterity:
+                case (int)StatsType.Stats.ExaltedDexterity:
                     ExaltedDexterity = intValue;
                     break;
-                case (int)Stats.ExaltedHealth:
+                case (int)StatsType.Stats.ExaltedHealth:
                     ExaltedHealth = intValue;
                     break;
-                case (int)Stats.ExaltedMana:
+                case (int)StatsType.Stats.ExaltedMana:
                     ExaltedMana = intValue;
                     break;
-                case (int)Stats.ExaltedSpeed:
+                case (int)StatsType.Stats.ExaltedSpeed:
                     ExaltedSpeed = intValue;
                     break;
-                case (int)Stats.ExaltedVitality:
+                case (int)StatsType.Stats.ExaltedVitality:
                     ExaltedVitality = intValue;
                     break;
-                case (int)Stats.ExaltedWisdom:
+                case (int)StatsType.Stats.ExaltedWisdom:
                     ExaltedWisdom = intValue;
                     break;
-                case (int)Stats.Texture1:
+                case (int)StatsType.Stats.Texture1:
                     Texture1 = intValue;
                     break;
-                case (int)Stats.Texture2:
+                case (int)StatsType.Stats.Texture2:
                     Texture2 = intValue;
                     break;
-                case (int)Stats.FortuneTokens:
+                case (int)StatsType.Stats.FortuneTokens:
                     FortuneTokens = intValue;
                     break;
-                case (int)Stats.Forgefire:
+                case (int)StatsType.Stats.Forgefire:
                     Forgefire = intValue;
                     break;
-                case (int)Stats.ExaltationDamageMultiplier:
+                case (int)StatsType.Stats.ExaltationDamageMultiplier:
                     ExaltationDamageMultiplier = intValue / 1000f;
                     break;
-                case (int)Stats.SupporterPoints:
+                case (int)StatsType.Stats.SupporterPoints:
                     SupporterPoints = intValue;
                     break;
-                case (int)Stats.ProjectileSpeedMult:
+                case (int)StatsType.Stats.ProjectileSpeedMult:
                     ProjectileSpeedMultiplier = intValue / 1000f;
                     break;
-                case (int)Stats.ProjectileLifeMult:
+                case (int)StatsType.Stats.ProjectileLifeMult:
                     ProjectileLifeMultiplier = intValue / 1000f;
                     break;
-                case (int)Stats.AltTextureIndex:
+                case (int)StatsType.Stats.AltTextureIndex:
                     AltTextureIndex = intValue;
                     break;
-                case (int)Stats.HasXpBoost:
+                case (int)StatsType.Stats.HasXpBoost:
                     HasXpBoost = intValue > 0;
                     break;
-                case (int)Stats.XpBoostTime:
+                case (int)StatsType.Stats.XpBoostTime:
                     XpBoostTime = intValue * 1000;
                     break;
-                case (int)Stats.LootDropBoostTime:
+                case (int)StatsType.Stats.LootDropBoostTime:
                     LootDropBoostTime = intValue * 1000;
                     break;
-                case (int)Stats.LootTierBoostTime:
+                case (int)StatsType.Stats.LootTierBoostTime:
                     LootTierBoostTime = intValue * 1000;
                     break;
-                case (int)Stats.ChallengerStarBg:
+                case (int)StatsType.Stats.ChallengerStarBg:
                     ChallengerStarBg = intValue;
                     break;
-                case (int)Stats.DungeonMod:
-                    ChallengerStarBg = intValue;
+                case (int)StatsType.Stats.DungeonMod:
+                    DungeonMod = stringValue;
                     break;
-                case (int)Stats.Unknown121:
-                    Unknown121 = stringValue;
+                case (int)StatsType.Stats.Unknown122:
+                    Unknown122 = intValue;
                     break;
-                case (int)Stats.Unknown123:
-                    Unknown123 = stringValue;
+                case (int)StatsType.Stats.Unknown123:
+                    Unknown123 = intValue;
+                    break;
+                case (int)StatsType.Stats.Unknown124:
+                    Unknown124 = intValue;
+                    break;
+                case (int)StatsType.Stats.Unknown125:
+                    Unknown125 = intValue;
+                    break;
+                case (int)StatsType.Stats.Unknown126:
+                    Unknown126 = intValue;
                     break;
             }
         }

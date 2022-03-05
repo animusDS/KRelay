@@ -38,11 +38,9 @@ namespace Lib_K_Relay.Networking
             var type = typeof(T);
             object value;
 
-            if (!States.TryGetValue(stateName, out value))
-            {
-                value = Activator.CreateInstance(type);
-                States.Add(stateName, value);
-            }
+            if (States.TryGetValue(stateName, out value)) return (T)value;
+            value = Activator.CreateInstance(type);
+            States.Add(stateName, value);
 
             return (T)value;
         }

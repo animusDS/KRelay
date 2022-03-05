@@ -66,7 +66,7 @@ namespace Lib_K_Relay.Networking
             packet.Port = 2050;
         }
 
-        public void OnGotoCommand(Client client, string command, string[] args)
+        private void OnGotoCommand(Client client, string command, string[] args)
         {
             if (args.Length != 1) return;
             var reconnect = (ReconnectPacket)Packet.Create(PacketType.RECONNECT);

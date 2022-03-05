@@ -47,16 +47,18 @@ namespace Lib_K_Relay.Utilities
         /// </summary>
         /// <param name="e">Exception to log</param>
         /// <param name="caller">Name of operation that failed</param>
-        public static void LogPluginException(Exception e, string caller)
+        private static void LogPluginException(Exception e, string caller)
         {
             var site = e.TargetSite;
             var methodName = site == null ? "<null method reference>" : site.Name;
-            var className = site == null ? "" : site.ReflectedType.Name;
+            if (site?.ReflectedType == null) return;
+            var className = site.ReflectedType.Name;
 
             Log("Error", "An exception was thrown within {0} at {1} {2}",
                 caller, className + "." + methodName,
 #if DEBUG
                 e);
+
 #else
                 e.Message);
 #endif

@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -100,18 +101,16 @@ namespace Lib_K_Relay.Networking
         /// </summary>
         public void Dispose()
         {
-            if (!_closed)
-            {
-                _closed = true;
-                _proxy.FireClientDisconnected(this);
-                _clientStream?.Close();
-                _serverStream?.Close();
-                _clientConnection?.Close();
-                _serverConnection?.Close();
-                _clientBuffer.Dispose();
-                _serverBuffer.Dispose();
-                PluginUtils.Log("Client", "Disconnected.");
-            }
+            if (_closed) return;
+            _closed = true;
+            _proxy.FireClientDisconnected(this);
+            _clientStream?.Close();
+            _serverStream?.Close();
+            _clientConnection?.Close();
+            _serverConnection?.Close();
+            _clientBuffer.Dispose();
+            _serverBuffer.Dispose();
+            PluginUtils.Log("Client", "Disconnected.");
         }
 
         /// <summary>
@@ -175,17 +174,18 @@ namespace Lib_K_Relay.Networking
                 new Tuple<NetworkStream, PacketBuffer>(stream, buffer));
         }
 
+        [SuppressMessage("ReSharper.DPA", "DPA0002: Excessive memory allocations in SOH", MessageId = "type: System.String; size: 131MB")]
         private void RemoteRead(IAsyncResult ar)
         {
-            var stream = (ar.AsyncState as Tuple<NetworkStream, PacketBuffer>).Item1;
-            var buffer = (ar.AsyncState as Tuple<NetworkStream, PacketBuffer>).Item2;
+            var stream = (ar.AsyncState as Tuple<NetworkStream, PacketBuffer>)?.Item1;
+            var buffer = (ar.AsyncState as Tuple<NetworkStream, PacketBuffer>)?.Item2;
             var isClient = stream == _clientStream;
             var cipher = isClient ? _clientReceiveState : _serverReceiveState;
 
             var success = PluginUtils.ProtectedInvoke(() =>
             {
-                if (!stream.CanRead) return;
-
+                if (stream != null && !stream.CanRead) return;
+                if (buffer == null || stream == null) return;
                 var read = stream.EndRead(ar);
                 buffer.Advance(read);
 

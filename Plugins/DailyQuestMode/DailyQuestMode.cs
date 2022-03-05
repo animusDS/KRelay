@@ -1,8 +1,8 @@
 ﻿using Lib_K_Relay;
 using Lib_K_Relay.Interface;
-using Lib_K_Relay.Networking;
 using Lib_K_Relay.Networking.Packets;
 using Lib_K_Relay.Networking.Packets.Client;
+using Lib_K_Relay.Networking.Packets.Server;
 using Lib_K_Relay.Utilities;
 
 namespace DailyQuestMode
@@ -26,8 +26,14 @@ namespace DailyQuestMode
 
         public string[] GetCommands()
         {
-            return new[] { "dailyquestmode" };
+            return new[]
+            {
+                "dailyquestmode"
+            };
         }
+
+        private bool _firstLoad = true;
+        private string _currentMap;
 
         public void Initialize(Proxy proxy)
         {
@@ -38,18 +44,32 @@ namespace DailyQuestMode
                 client.SendToClient(PluginUtils.CreateOryxNotification("Daily Quest Mode",
                     "Daily Quest Mode is now " + (Config.Default.enabled ? "enabled" : "disabled")));
             });
-            proxy.HookPacket(PacketType.LOAD, OnLoad);
-        }
 
-        private bool _firstLoad = true;
+            proxy.HookCommand("dailyquest", (client, cmd, args) =>
+            {
+                if (_currentMap == "Nexus")
+                {
+                    client.SendToServer((GoToQuestRoomPacket)Packet.Create(PacketType.QUEST_ROOM_MSG));
+                    return;
+                }
 
-        private void OnLoad(Client client, Packet packet)
-        {
-            if (!Config.Default.enabled) return;
-            if (!_firstLoad) return;
-            packet.Send = false;
-            _firstLoad = false;
-            client.SendToServer((GoToQuestRoomPacket)Packet.Create(PacketType.QUEST_ROOM_MSG));
+                client.SendToServer((EscapePacket)Packet.Create(PacketType.ESCAPE));
+            });
+
+
+            if (Config.Default.enabled)
+            {
+                proxy.HookPacket(PacketType.MAPINFO,
+                    (client, packet) => { _currentMap = ((MapInfoPacket)packet).Name; });
+
+                proxy.HookPacket(PacketType.LOAD, (client, packet) =>
+                {
+                    if (!_firstLoad && _currentMap != "Nexus") return;
+                    packet.Send = false;
+                    _firstLoad = false;
+                    client.SendToServer((GoToQuestRoomPacket)Packet.Create(PacketType.QUEST_ROOM_MSG));
+                });
+            }
         }
     }
 }

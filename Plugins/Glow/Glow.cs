@@ -4,6 +4,7 @@ using Lib_K_Relay.Networking;
 using Lib_K_Relay.Networking.Packets;
 using Lib_K_Relay.Networking.Packets.DataObjects;
 using Lib_K_Relay.Networking.Packets.Server;
+using Lib_K_Relay.Utilities;
 
 namespace Glow
 {
@@ -26,23 +27,30 @@ namespace Glow
 
         public string[] GetCommands()
         {
-            return new[] { "" };
+            return new[] { "/glow" };
         }
 
         public void Initialize(Proxy proxy)
         {
             proxy.HookPacket(PacketType.UPDATE, OnUpdate);
+            proxy.HookCommand("glow", (client, cmd, args) =>
+            {
+                Config.Default.enabled = !Config.Default.enabled;
+                Config.Default.Save();
+                client.SendToClient(PluginUtils.CreateOryxNotification("Glow",
+                    "Glow is now " + (Config.Default.enabled ? "enabled" : "disabled")));
+            });
         }
 
         private void OnUpdate(Client client, Packet packet)
         {
+            if (!Config.Default.enabled) return;
             var update = (UpdatePacket)packet;
-
             for (var i = 0; i < update.NewObjs.Length; i++)
                 if (update.NewObjs[i].Status.ObjectId == client.ObjectId)
-                    for (var j = 0; j < update.NewObjs[i].Status.Data.Length; j++)
-                        if (update.NewObjs[i].Status.Data[j].Id == (int)Stats.IsSupporter)
-                            update.NewObjs[i].Status.Data[j].IntValue = 1;
+                    foreach (var t in update.NewObjs[i].Status.Data)
+                        if (t.Id == (int)Stats.IsSupporter)
+                            t.IntValue = 1;
         }
     }
 }

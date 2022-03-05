@@ -68,7 +68,7 @@ namespace Lib_K_Relay.GameData.DataStructures
 
         public override string ToString()
         {
-            return string.Format("Server: {0}/{1} ({2})", Name, Abbreviation, Address);
+            return $"Server: {Name}/{Abbreviation} ({Address})";
         }
     }
 }

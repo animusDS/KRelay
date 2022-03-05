@@ -1,11 +1,12 @@
-﻿using Lib_K_Relay.Networking.Packets.DataObjects;
+﻿using Lib_K_Relay.Networking.Packets.DataObjects.Data;
+using Lib_K_Relay.Networking.Packets.DataObjects.Location;
 
 namespace Lib_K_Relay.Networking.Packets.Server
 {
     public class UpdatePacket : Packet
     {
         public int[] Drops;
-        public byte LevelType;
+        public int LevelType;
         public Entity[] NewObjs;
         public Location Position;
         public Tile[] Tiles;
@@ -15,7 +16,7 @@ namespace Lib_K_Relay.Networking.Packets.Server
         public override void Read(PacketReader r)
         {
             Position = (Location)new Location().Read(r);
-            LevelType = r.ReadByte();
+            LevelType = r.ReadInt32();
             var i = 0;
             var tilesLen = CompressedInt.Read(r);
             Tiles = new Tile[tilesLen];

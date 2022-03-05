@@ -13,8 +13,9 @@ namespace Lib_K_Relay.GameData
     {
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> input, Action<T> action)
         {
-            foreach (var element in input) action(element);
-            return input;
+            var forEach = input as T[] ?? input.ToArray();
+            foreach (var element in forEach) action(element);
+            return forEach;
         }
 
         public static bool HasElement(this XElement element, XName name)
@@ -24,12 +25,12 @@ namespace Lib_K_Relay.GameData
 
         public static string AttrDefault(this XElement element, XName name, string @default)
         {
-            return element.Attributes(name).Any() ? element.Attribute(name).Value : @default;
+            return element.Attributes(name).Any() ? element.Attribute(name)?.Value : @default;
         }
 
         public static string ElemDefault(this XElement element, XName name, string @default)
         {
-            return element.Elements(name).Any() ? element.Element(name).Value : @default;
+            return element.Elements(name).Any() ? element.Element(name)?.Value : @default;
         }
 
         public static int ParseHex(this string input)

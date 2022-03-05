@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Lib_K_Relay.Networking.Packets.DataObjects
+namespace Lib_K_Relay.Networking.Packets.DataObjects.Data
 {
     public class BitmapData : IDataObject
     {

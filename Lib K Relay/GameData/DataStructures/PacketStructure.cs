@@ -68,7 +68,7 @@ namespace Lib_K_Relay.GameData.DataStructures
 
         public override string ToString()
         {
-            return string.Format("Packet: {0} (0x{1:X})", PacketType, Id);
+            return $"Packet: {PacketType} (0x{Id:X})";
         }
     }
 }

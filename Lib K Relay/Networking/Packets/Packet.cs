@@ -77,7 +77,6 @@ namespace Lib_K_Relay.Networking.Packets
 
                     PluginUtils.Log("Packet", msg);
                 }
-
                 return packet;
             }
         }

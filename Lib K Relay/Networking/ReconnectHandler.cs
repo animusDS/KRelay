@@ -13,7 +13,6 @@ namespace Lib_K_Relay.Networking
         public void Attach(Proxy proxy)
         {
             _proxy = proxy;
-            proxy.HookPacket<CreateSuccessPacket>(OnCreateSuccess);
             proxy.HookPacket<ReconnectPacket>(OnReconnect);
             proxy.HookPacket<HelloPacket>(OnHello);
 
@@ -25,23 +24,13 @@ namespace Lib_K_Relay.Networking
         private void OnHello(Client client, HelloPacket packet)
         {
             client.State = _proxy.GetState(client, packet.Key);
-            if (client.State.ConRealKey.Length != 255) // todo: very scuffed, but needed for /con
+            if (client.State.ConRealKey.Length != 255) // "very scuffed, but needed for /con" - no not really
             {
                 packet.Key = client.State.ConRealKey;
                 client.State.ConRealKey = new byte[255];
             }
-
             client.Connect(packet);
             packet.Send = false;
-        }
-
-        private void OnCreateSuccess(Client client, CreateSuccessPacket packet)
-        {
-            PluginUtils.Delay(1000, () =>
-            {
-                var message = "Welcome to K Relay!";
-                client.SendToClient(PluginUtils.CreateNotification(message));
-            });
         }
 
         private void OnReconnect(Client client, ReconnectPacket packet)

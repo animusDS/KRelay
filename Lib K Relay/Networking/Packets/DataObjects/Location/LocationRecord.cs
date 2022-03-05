@@ -1,4 +1,6 @@
-﻿namespace Lib_K_Relay.Networking.Packets.DataObjects
+﻿using Lib_K_Relay.Networking.Packets.DataObjects.Data;
+
+namespace Lib_K_Relay.Networking.Packets.DataObjects.Location
 {
     public class LocationRecord : Location
     {
@@ -6,16 +8,18 @@
 
         public override IDataObject Read(PacketReader r)
         {
+            X = r.ReadInt32();
+            Y = r.ReadInt32();
             Time = r.ReadInt32();
-            base.Read(r);
 
             return this;
         }
 
         public override void Write(PacketWriter w)
         {
+            w.Write(X);
+            w.Write(Y);
             w.Write(Time);
-            base.Write(w);
         }
 
         public override object Clone()

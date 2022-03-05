@@ -1,4 +1,6 @@
-﻿namespace Lib_K_Relay.Networking.Packets.DataObjects
+﻿using Lib_K_Relay.Networking.Packets.DataObjects.Data;
+
+namespace Lib_K_Relay.Networking.Packets.DataObjects.Location
 {
     public class Tile : IDataObject
     {

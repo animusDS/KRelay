@@ -1,9 +1,10 @@
 ﻿using System.Reflection;
 using System.Text;
+using Lib_K_Relay.Networking.Packets.DataObjects.Stat;
 using Lib_K_Relay.Networking.Packets.Server;
 using Lib_K_Relay.Utilities;
 
-namespace Lib_K_Relay.Networking.Packets.DataObjects
+namespace Lib_K_Relay.Networking.Packets.DataObjects.Data
 {
     public class PlayerData // TODO: Add the rest of the stats
     {
@@ -62,7 +63,7 @@ namespace Lib_K_Relay.Networking.Packets.DataObjects
         public int OwnerObjectId;
         public string OwnerAccountId;
         public string GraveAccountId;
-        public Location Pos = new Location();
+        public Location.Location Pos = new Location.Location();
         public int[] Quickslots = { -1, -1, -1 };
         public int RealmGold;
         public int SinkLevel;

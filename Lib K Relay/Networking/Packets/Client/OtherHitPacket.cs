@@ -1,4 +1,4 @@
-﻿namespace Lib_K_Relay.Networking.Packets.Server
+﻿namespace Lib_K_Relay.Networking.Packets.Client
 {
     public class OtherHitPacket : Packet
     {

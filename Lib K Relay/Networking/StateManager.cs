@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
 using Lib_K_Relay.Networking.Packets.Client;
-using Lib_K_Relay.Networking.Packets.DataObjects;
+using Lib_K_Relay.Networking.Packets.DataObjects.Data;
+using Lib_K_Relay.Networking.Packets.DataObjects.Location;
 using Lib_K_Relay.Networking.Packets.Server;
+using Lib_K_Relay.Utilities;
 
 namespace Lib_K_Relay.Networking
 {
@@ -49,6 +51,10 @@ namespace Lib_K_Relay.Networking
         private void OnCreateSuccess(Client client, CreateSuccessPacket packet)
         {
             client.PlayerData = new PlayerData(packet.ObjectId, client.State.Value<MapInfoPacket>("MapInfo"));
+            PluginUtils.Delay(1000, () =>
+            {
+                client.SendToClient(PluginUtils.CreateNotification("Welcome to K Relay!"));
+            });
         }
 
         private void OnUpdate(Client client, UpdatePacket packet)

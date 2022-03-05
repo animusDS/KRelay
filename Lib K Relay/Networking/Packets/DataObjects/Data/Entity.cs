@@ -1,4 +1,6 @@
-﻿namespace Lib_K_Relay.Networking.Packets.DataObjects
+﻿using Lib_K_Relay.Networking.Packets.DataObjects.Stat;
+
+namespace Lib_K_Relay.Networking.Packets.DataObjects.Data
 {
     public class Entity : IDataObject
     {
@@ -9,7 +11,6 @@
         {
             ObjectType = r.ReadUInt16();
             Status.Read(r);
-
             return this;
         }
 

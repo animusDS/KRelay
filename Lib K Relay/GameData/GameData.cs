@@ -16,10 +16,6 @@ namespace Lib_K_Relay.GameData
     /// <typeparam name="TDataType">The type of the data structure (e.g. PacketStructure, EnemyStructure, ServerStructure)</typeparam>
     public class GameDataMap<TIdType, TDataType> where TDataType : IDataStructure<TIdType>
     {
-        private GameDataMap()
-        {
-        }
-
         public GameDataMap(Dictionary<TIdType, TDataType> map)
         {
             Map = map;

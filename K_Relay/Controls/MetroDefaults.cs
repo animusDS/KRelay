@@ -1,4 +1,6 @@
-﻿namespace MetroFramework
+﻿using MetroFramework;
+
+namespace K_Relay.Controls
 {
     internal static class MetroDefaults
     {

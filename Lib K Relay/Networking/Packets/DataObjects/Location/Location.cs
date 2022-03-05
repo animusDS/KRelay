@@ -1,6 +1,7 @@
 ﻿using System;
+using Lib_K_Relay.Networking.Packets.DataObjects.Data;
 
-namespace Lib_K_Relay.Networking.Packets.DataObjects
+namespace Lib_K_Relay.Networking.Packets.DataObjects.Location
 {
     public class Location : IDataObject
     {

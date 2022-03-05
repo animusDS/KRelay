@@ -1,7 +1,7 @@
-﻿using Lib_K_Relay.Networking.Packets.DataObjects;
+﻿using Lib_K_Relay.Networking.Packets.DataObjects.Location;
 using Lib_K_Relay.Utilities;
 
-namespace Lib_K_Relay.Networking.Packets.Client
+namespace Lib_K_Relay.Networking.Packets.Server
 {
     public class AoEPacket : Packet
     {

@@ -1,4 +1,4 @@
-﻿namespace Lib_K_Relay.Networking.Packets.DataObjects
+﻿namespace Lib_K_Relay.Networking.Packets.DataObjects.Data
 {
     internal class CompressedInt
     {

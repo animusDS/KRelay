@@ -6,7 +6,7 @@ using System.Net.Sockets;
 using Lib_K_Relay.Crypto;
 using Lib_K_Relay.Networking.Packets;
 using Lib_K_Relay.Networking.Packets.Client;
-using Lib_K_Relay.Networking.Packets.DataObjects;
+using Lib_K_Relay.Networking.Packets.DataObjects.Data;
 using Lib_K_Relay.Utilities;
 
 namespace Lib_K_Relay.Networking
@@ -173,9 +173,7 @@ namespace Lib_K_Relay.Networking
             stream.BeginRead(buffer.Bytes, offset, amount, RemoteRead,
                 new Tuple<NetworkStream, PacketBuffer>(stream, buffer));
         }
-
-        [SuppressMessage("ReSharper.DPA", "DPA0002: Excessive memory allocations in SOH",
-            MessageId = "type: System.String; size: 131MB")]
+        [SuppressMessage("ReSharper.DPA", "DPA0002: Excessive memory allocations in SOH", MessageId = "type: System.String; size: 167MB")]
         private void RemoteRead(IAsyncResult ar)
         {
             var stream = (ar.AsyncState as Tuple<NetworkStream, PacketBuffer>)?.Item1;

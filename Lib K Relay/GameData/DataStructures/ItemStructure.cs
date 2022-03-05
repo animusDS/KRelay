@@ -108,7 +108,7 @@ namespace Lib_K_Relay.GameData.DataStructures
 
             NumProjectiles = item.ElemDefault("NumProjectiles", "0").ParseInt();
             if (item.HasElement("Projectile")) Projectile = new ProjectileStructure(item.Element("Projectile"));
-        }
+            }
 
         /// <summary>
         ///     The numerical identifier for this item
@@ -125,7 +125,7 @@ namespace Lib_K_Relay.GameData.DataStructures
             var map = new Dictionary<ushort, ItemStructure>();
 
             doc.Element("Objects")
-                .Elements("Object")
+                ?.Elements("Object")
                 .Where(elem => elem.HasElement("Item"))
                 .ForEach(item =>
                 {
@@ -138,7 +138,7 @@ namespace Lib_K_Relay.GameData.DataStructures
 
         public override string ToString()
         {
-            return string.Format("Item: {0} (0x{1:X})", Name, Id);
+            return $"Item: {Name} (0x{Id:X})";
         }
     }
 }

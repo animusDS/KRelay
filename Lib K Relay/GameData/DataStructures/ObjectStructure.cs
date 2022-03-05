@@ -149,7 +149,7 @@ namespace Lib_K_Relay.GameData.DataStructures
 
         public override string ToString()
         {
-            return string.Format("Object: {0} (0x{1:X})", Name, Id);
+            return $"Object: {Name} (0x{Id:X})";
         }
     }
 }

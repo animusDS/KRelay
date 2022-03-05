@@ -126,10 +126,7 @@ namespace Lib_K_Relay.Utilities
         /// <summary>
         ///     Displays a notification above a specified object.
         /// </summary>
-        /// <param name="objectId">Object to display the notification on</param>
         /// <param name="message">Message of the notification</param>
-        /// <param name="color">Color of the notification text</param>
-        /// <param name="extra"> ? </param>
         /// <param name="picture"> Image to show in log message </param>
         /// <returns></returns>
         public static NotificationPacket CreateNotification(string message, int picture = 1562)

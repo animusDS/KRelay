@@ -220,7 +220,7 @@ namespace Lib_K_Relay
 
                 foreach (var pair in _genericPacketHooks)
                     if (pair.Value == packet.GetType())
-                        (pair.Key as Delegate).Method.Invoke((pair.Key as Delegate).Target,
+                        (pair.Key as Delegate)?.Method.Invoke((pair.Key as Delegate)?.Target,
                             new object[2] { client, Convert.ChangeType(packet, pair.Value) });
             }, "ServerPacket");
         }
@@ -264,7 +264,7 @@ namespace Lib_K_Relay
 
                 foreach (var pair in _genericPacketHooks)
                     if (pair.Value == packet.GetType())
-                        (pair.Key as Delegate).Method.Invoke((pair.Key as Delegate).Target,
+                        (pair.Key as Delegate)?.Method.Invoke((pair.Key as Delegate)?.Target,
                             new object[2] { client, Convert.ChangeType(packet, pair.Value) });
             }, "ClientPacket");
         }

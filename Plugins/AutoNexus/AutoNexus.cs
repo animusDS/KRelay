@@ -7,7 +7,7 @@ using Lib_K_Relay.Interface;
 using Lib_K_Relay.Networking;
 using Lib_K_Relay.Networking.Packets;
 using Lib_K_Relay.Networking.Packets.Client;
-using Lib_K_Relay.Networking.Packets.DataObjects;
+using Lib_K_Relay.Networking.Packets.DataObjects.Stat;
 using Lib_K_Relay.Networking.Packets.Server;
 using Lib_K_Relay.Utilities;
 using MapCacher;
@@ -98,7 +98,7 @@ namespace AutoNexus
             foreach (var status in tick.Statuses)
                 if (status.ObjectId == client.ObjectId)
                     foreach (var stat in status.Data)
-                        if (stat.Id == (int)Stats.HP)
+                        if (stat.Id == (int)StatsType.Stats.Hp)
                             HP = stat.IntValue;
 
             ArmorBroken = client.PlayerData.HasConditionEffect(ConditionEffectIndex.ArmorBroken);
@@ -209,7 +209,7 @@ namespace AutoNexus
         public void GroundDamage(GroundDamagePacket gdamage)
         {
             var t = client.GetMap().At(gdamage.Position.X, gdamage.Position.Y);
-            if (GameData.Tiles.Map.ContainsKey(t)) gdamage.Send = ApplyDamage(GameData.Tiles.ByID(t).MaxDamage);
+            if (GameData.Tiles.Map.ContainsKey(t)) gdamage.Send = ApplyDamage(GameData.Tiles.ById(t).MaxDamage);
         }
     }
 
@@ -252,22 +252,22 @@ namespace AutoNexus
                     // armor piercing
                     if (enemy.Value.Projectiles.Any(p => p.ArmorPiercing))
                     {
-                        Bullet.piercing[enemy.Value.ID] = new List<int>();
+                        Bullet.piercing[enemy.Value.Id] = new List<int>();
                         enemy.Value.Projectiles.ForEach(proj =>
                         {
                             if (proj.ArmorPiercing)
-                                Bullet.piercing[enemy.Value.ID].Add(proj.ID);
+                                Bullet.piercing[enemy.Value.Id].Add(proj.Id);
                         });
                     }
 
                     // armor break
                     if (enemy.Value.Projectiles.Any(p => p.StatusEffects.ContainsKey("Armor Broken")))
                     {
-                        Bullet.breaking[enemy.Value.ID] = new List<int>();
+                        Bullet.breaking[enemy.Value.Id] = new List<int>();
                         enemy.Value.Projectiles.ForEach(proj =>
                         {
                             if (proj.StatusEffects.ContainsKey("Armor Broken"))
-                                Bullet.breaking[enemy.Value.ID].Add(proj.ID);
+                                Bullet.breaking[enemy.Value.Id].Add(proj.Id);
                         });
                     }
                 });

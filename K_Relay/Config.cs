@@ -17,7 +17,7 @@ namespace K_Relay
 
         private void SettingsSavingEventHandler(object sender, CancelEventArgs e)
         {
-            // Add code to handle the SettingsSaving event here.
+            // Add code to handle the SettingsSaving event here.1
         }
     }
 }

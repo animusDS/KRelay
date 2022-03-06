@@ -2,7 +2,7 @@
 using Lib_K_Relay.Interface;
 using Lib_K_Relay.Networking;
 using Lib_K_Relay.Networking.Packets;
-using Lib_K_Relay.Networking.Packets.DataObjects;
+using Lib_K_Relay.Networking.Packets.DataObjects.Stat;
 using Lib_K_Relay.Networking.Packets.Server;
 using Lib_K_Relay.Utilities;
 
@@ -49,7 +49,7 @@ namespace Glow
             for (var i = 0; i < update.NewObjs.Length; i++)
                 if (update.NewObjs[i].Status.ObjectId == client.ObjectId)
                     foreach (var t in update.NewObjs[i].Status.Data)
-                        if (t.Id == (int)Stats.IsSupporter)
+                        if (t.Id == (int)StatsType.Stats.IsSupporter)
                             t.IntValue = 1;
         }
     }

@@ -6,7 +6,7 @@ using Lib_K_Relay.GameData;
 using Lib_K_Relay.Interface;
 using Lib_K_Relay.Networking;
 using Lib_K_Relay.Networking.Packets;
-using Lib_K_Relay.Networking.Packets.DataObjects;
+using Lib_K_Relay.Networking.Packets.DataObjects.Stat;
 using Lib_K_Relay.Networking.Packets.Server;
 using Lib_K_Relay.Utilities;
 
@@ -69,8 +69,8 @@ namespace ItemFinder
             // Horrible way to do this but it works
             try
             {
-                itemId = GameData.Items.Map.First(e => e.Value.Name.ToLower() == item).Value.ID;
-                _items.Add(GameData.Items.ByID(itemId).ID, GameData.Items.ByID(itemId).Name);
+                itemId = GameData.Items.Map.First(e => e.Value.Name.ToLower() == item).Value.Id;
+                _items.Add(GameData.Items.ById(itemId).Id, GameData.Items.ById(itemId).Name);
             }
             catch (Exception)
             {
@@ -108,7 +108,7 @@ namespace ItemFinder
                         if (statData.IntValue == item.Key)
                             hasItem = true;
 
-                    if (!hasItem || statData.Id != (int)Stats.Name ||
+                    if (!hasItem || statData.Id != (int)StatsType.Stats.Name ||
                         statData.StringValue == client.PlayerData.Name) continue;
 
                     if (!_itemHolders.ContainsKey(entity.Status.ObjectId))

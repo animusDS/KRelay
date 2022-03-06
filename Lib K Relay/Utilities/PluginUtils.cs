@@ -103,6 +103,7 @@ namespace Lib_K_Relay.Utilities
         /// </summary>
         /// <param name="settingsObject">Settings to base the form off of</param>
         /// <param name="title">Title of the form to be shown</param>
+        /// <param name="proxy"></param>
         public static void ShowGenericSettingsGui(dynamic settingsObject, string title)
         {
             ShowGui(new FrmGenericSettings(settingsObject, title));

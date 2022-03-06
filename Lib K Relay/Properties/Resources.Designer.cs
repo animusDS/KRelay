@@ -114,6 +114,15 @@ namespace Lib_K_Relay.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;Servers&gt;&lt;Server&gt;&lt;Name&gt;~Proxy Server~&lt;/Name&gt;&lt;DNS&gt;127.0.0.1&lt;/DNS&gt;&lt;Lat&gt;0&lt;/Lat&gt;&lt;Long&gt;0&lt;/Long&gt;&lt;Usage&gt;0.75&lt;/Usage&gt;&lt;/Server&gt;.
+        /// </summary>
+        internal static string ProxyServer {
+            get {
+                return ResourceManager.GetString("ProxyServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         ///
         ///&lt;Servers&gt;

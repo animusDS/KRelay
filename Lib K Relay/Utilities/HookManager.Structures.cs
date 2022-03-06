@@ -2,7 +2,7 @@ using System.Runtime.InteropServices;
 
 namespace Lib_K_Relay.Utilities
 {
-    public static partial class HookManager
+    public partial class HookManager
     {
         /// <summary>
         ///     The Point structure defines the X- and Y- coordinates of a point.

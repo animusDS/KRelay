@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace Lib_K_Relay.Utilities
 {
-    public static partial class HookManager
+    public partial class HookManager
     {
         #region Windows constants
 

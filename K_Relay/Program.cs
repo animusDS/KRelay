@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -17,7 +18,7 @@ namespace K_Relay
             EmbeddedAssembly.Load("K_Relay.MetroFramework.Fonts.dll", "K_Relay.MetroFramework.Fonts.dll");
 
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-
+            
             DoAppSetup();
         }
 

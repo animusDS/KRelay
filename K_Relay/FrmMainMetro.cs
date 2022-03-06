@@ -1,15 +1,20 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using K_Relay.Util;
 using Lib_K_Relay;
 using Lib_K_Relay.GameData;
 using Lib_K_Relay.Utilities;
+using MetroFramework;
 using MetroFramework.Drawing;
 using MetroFramework.Forms;
+using static Lib_K_Relay.Utilities.HookManager;
 
 namespace K_Relay
 {
@@ -33,13 +38,11 @@ namespace K_Relay
                 InitPackets();
                 InitSettings();
             });
-
             _proxy = new Proxy();
             _proxy.ProxyListenStarted += _ => SetStatus("Running", Color.Green);
             _proxy.ProxyListenStopped += _ => SetStatus("Stopped", Color.Red);
             InitPlugins();
-
-            if (GameData.Servers.Map.Where(s => s.Value.Name == (string)lstServers.SelectedItem).Any())
+            if (GameData.Servers.Map.Any(s => s.Value.Name == (string)lstServers.SelectedItem))
                 Proxy.DefaultServer = GameData.Servers.ByName((string)lstServers.SelectedItem).Address;
             else
                 PluginUtils.Log("K Relay", "Default server wasn't found, using USWest.");
@@ -56,11 +59,7 @@ namespace K_Relay
             menuInfo.BackColor = menuPlugins.BackColor =
                 menuPackets.BackColor = menuSettings.BackColor = MetroPaint.GetStyleColor(Style);
         }
-
-        private void metroButton1_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
+        
 
         private void btnToggleProxy_Click(object sender, EventArgs e)
         {
@@ -68,7 +67,6 @@ namespace K_Relay
             {
                 btnToggleProxy.Text = "Stop Proxy";
                 SetStatus("Starting...", Color.Black);
-
                 _proxy.Start();
             }
             else
@@ -106,7 +104,7 @@ namespace K_Relay
         {
             tbxLog.Clear();
         }
-
+        
         private void SetStatus(string status, Color color)
         {
             Invoke(new MethodInvoker(() =>
@@ -114,6 +112,11 @@ namespace K_Relay
                 lblStatus.ForeColor = color;
                 lblStatus.Text = status;
             }));
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            _proxy.Stop();
         }
     }
 }

@@ -7,8 +7,9 @@ namespace Lib_K_Relay.Utilities
     ///     This class monitors all mouse activities globally (also outside of the application)
     ///     and provides appropriate events.
     /// </summary>
-    public static partial class HookManager
+    public partial class HookManager
     {
+
         //################################################################
 
         #region Mouse events

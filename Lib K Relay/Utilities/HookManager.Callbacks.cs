@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace Lib_K_Relay.Utilities
 {
-    public static partial class HookManager
+    public partial class HookManager
     {
         [DllImport("kernel32", SetLastError = true, CharSet = CharSet.Auto)]
         public static extern IntPtr LoadLibrary(string fileName);
@@ -41,11 +41,11 @@ namespace Lib_K_Relay.Utilities
         ///     http://msdn.microsoft.com/library/default.asp?url=/library/en-us/winui/winui/windowsuserinterface/windowing/hooks/hookreference/hookfunctions/callwndproc.asp
         /// </remarks>
         private delegate int HookProc(int nCode, int wParam, IntPtr lParam);
-
+        
         //##############################################################################
-
+        
         #region Mouse hook processing
-
+        
         /// <summary>
         ///     This field is not objectively needed but we need to keep a reference on a delegate which will be
         ///     passed to unmanaged code. To avoid GC to clean it up.

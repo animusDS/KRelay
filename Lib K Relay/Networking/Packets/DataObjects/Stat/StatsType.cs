@@ -113,6 +113,9 @@
             // i think the star bg is unused, but still exported?
             ChallengerStarBg = 100,
             PlayerId = 101,
+            ProjectileSpeedMult = 102,
+            ProjectileLifeMult = 103,
+            CreatedTimestamp = 104,
             OpenedAtTimestamp = 104,
             ExaltedAttack = 105,
             ExaltedDefense = 106,

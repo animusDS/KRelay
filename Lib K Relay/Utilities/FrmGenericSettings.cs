@@ -7,11 +7,6 @@ namespace Lib_K_Relay.Utilities
     {
         private readonly dynamic _settings;
 
-        public FrmGenericSettings()
-        {
-            InitializeComponent();
-        }
-
         public FrmGenericSettings(dynamic settingsObject, string title)
         {
             InitializeComponent();

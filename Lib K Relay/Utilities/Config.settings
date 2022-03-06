@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="K_Relay" GeneratedClassName="Config">
+  <Profiles />
+  <Settings>
+    <Setting Name="ProxyServerName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">~Proxy Server~</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
+

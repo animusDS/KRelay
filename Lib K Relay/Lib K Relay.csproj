@@ -31,11 +31,25 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
+        <Reference Include="BCMakeCert, Version=2.0.9.0, Culture=neutral, PublicKeyToken=67cb91587178ac5a">
+          <HintPath>..\packages\BCMakeCert.2.0.9\lib\net40\BCMakeCert.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+        <Reference Include="DotNetZip, Version=1.13.4.0, Culture=neutral, PublicKeyToken=6583c7c814667745">
+          <HintPath>..\packages\DotNetZip.1.13.4\lib\net40\DotNetZip.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+        <Reference Include="FiddlerCore, Version=5.0.1.0, Culture=neutral, PublicKeyToken=67cb91587178ac5a">
+          <HintPath>..\packages\FiddlerCore.Trial.5.0.1\lib\net45\FiddlerCore.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
         <Reference Include="MetroFramework">
             <HintPath>..\K_Relay\MetroFramework.dll</HintPath>
             <Private>False</Private>
         </Reference>
         <Reference Include="System" />
+        <Reference Include="System.ComponentModel.Composition" />
+        <Reference Include="System.Configuration" />
         <Reference Include="System.Core" />
         <Reference Include="System.Drawing" />
         <Reference Include="System.Windows.Forms" />
@@ -44,6 +58,10 @@
         <Reference Include="Microsoft.CSharp" />
         <Reference Include="System.Data" />
         <Reference Include="System.Xml" />
+        <Reference Include="Telerik.NetworkConnections, Version=0.2.0.0, Culture=neutral, PublicKeyToken=67cb91587178ac5a">
+          <HintPath>..\packages\Telerik.NetworkConnections.0.2.0\lib\net40\Telerik.NetworkConnections.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Crypto\RC4Cipher.cs" />
@@ -189,6 +207,11 @@
             <DesignTime>True</DesignTime>
             <DependentUpon>Resources.resx</DependentUpon>
         </Compile>
+        <Compile Include="Utilities\Config.Designer.cs">
+          <AutoGen>True</AutoGen>
+          <DesignTimeSharedInput>True</DesignTimeSharedInput>
+          <DependentUpon>Config.settings</DependentUpon>
+        </Compile>
         <Compile Include="Utilities\FrmGenericSettings.cs">
             <SubType>Form</SubType>
         </Compile>
@@ -206,6 +229,7 @@
         <Compile Include="Networking\Packets\Server\UpdatePacket.cs" />
         <Compile Include="Proxy.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="Utilities\HookHttps.cs" />
     </ItemGroup>
     <ItemGroup>
         <EmbeddedResource Include="Properties\Resources.resx">
@@ -218,8 +242,14 @@
         </EmbeddedResource>
     </ItemGroup>
     <ItemGroup>
+        <None Include="packages.config" />
         <None Include="Resources\Packets.xml">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Include="Utilities\App.config" />
+        <None Include="Utilities\Config.settings">
+          <Generator>SettingsSingleFileGenerator</Generator>
+          <LastGenOutput>Config.Designer.cs</LastGenOutput>
         </None>
     </ItemGroup>
     <ItemGroup>

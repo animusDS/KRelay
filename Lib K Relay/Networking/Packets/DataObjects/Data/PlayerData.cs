@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Text;
 using Lib_K_Relay.Networking.Packets.DataObjects.Stat;
 using Lib_K_Relay.Networking.Packets.Server;
@@ -271,27 +270,18 @@ namespace Lib_K_Relay.Networking.Packets.DataObjects.Data
                 case (int)StatsType.Stats.HasBackpack: // 
                     HasBackpack = intValue > 0;
                     break;
-                case (int)StatsType.Stats.Unknown23: // 
-                    Unknown23 = intValue;
-                    break;
-                case (int)StatsType.Stats.Unknown24: // 
-                    Unknown24 = intValue;
-                    break;
-                case (int)StatsType.Stats.Unknown25: // 
-                    Unknown25 = intValue;
-                    break;
                 case (int)StatsType.Stats.SinkLevel: // 
                     SinkLevel = intValue;
                     break;
                 case (int)StatsType.Stats.Size: // 
                     Size = intValue;
                     break;
-                case (int)StatsType.Stats.QuickSlotItem1: // 
-                case (int)StatsType.Stats.QuickSlotItem2: // 
-                case (int)StatsType.Stats.QuickSlotItem3: // 
-                    Quickslots[id - (int)StatsType.Stats.QuickSlotItem1] = intValue;
+                case (int)StatsType.Stats.QuickslotItem1: // 
+                case (int)StatsType.Stats.QuickslotItem2: // 
+                case (int)StatsType.Stats.QuickslotItem3: // 
+                    Quickslots[id - (int)StatsType.Stats.QuickslotItem1] = intValue;
                     break;
-                case (int)StatsType.Stats.HasQuickSlotUpgrade: // 
+                case (int)StatsType.Stats.HasQuickslotUpgrade: // 
                     HasQuickslotUpgrade = intValue > 0;
                     break;
                 case (int)StatsType.Stats.ExaltedAttack: // 
@@ -348,27 +338,9 @@ namespace Lib_K_Relay.Networking.Packets.DataObjects.Data
                 case (int)StatsType.Stats.ChallengerStarBg: // 100
                     ChallengerStarBg = intValue;
                     break;
-                case (int)StatsType.Stats.ForgeFire: // 120
+                case (int)StatsType.Stats.Forgefire: // 120
                     Texture = stringValue;
                     break;
-                case (int)StatsType.Stats.DungeonMod: // 121
-                    DungeonMod = stringValue;
-                    break;
-                case (int)StatsType.Stats.Unknown122: // 122
-                    Unknown122 = intValue;
-                    break;
-                case (int)StatsType.Stats.Unknown123: // 123
-                    Unknown123 = intValue;
-                    break;
-                case (int)StatsType.Stats.Unknown124: // 124
-                    Unknown124 = intValue;
-                    break;
-                case (int)StatsType.Stats.Unknown125: // 125
-                    Unknown125 = intValue;
-                    break;
-                case (int)StatsType.Stats.Unknown126: // 126
-                    Unknown126 = intValue;
-                    break;    
             }
         }
 

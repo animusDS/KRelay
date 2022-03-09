@@ -7,10 +7,10 @@ namespace Lib_K_Relay.Networking.Packets.Server
         public float Angle;
         public float AngleInc;
         public ushort BulletId;
-        public byte BulletType;
+        public int BulletType;
         public short Damage;
         public Location Location;
-        public byte NumShots;
+        public int NumShots;
         public int OwnerId;
 
         public override PacketType Type => PacketType.ENEMYSHOOT;

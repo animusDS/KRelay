@@ -3,7 +3,7 @@
     public class AllyShootPacket : Packet
     {
         public float Angle;
-        public ushort BulletId;
+        public int BulletId;
         public ushort ContainerType;
         public bool IsBard;
         public int OwnerId;
@@ -12,7 +12,7 @@
 
         public override void Read(PacketReader r)
         {
-            BulletId = r.ReadUInt16();
+            BulletId = r.ReadByte();
             OwnerId = r.ReadInt32();
             ContainerType = r.ReadUInt16();
             Angle = r.ReadSingle();

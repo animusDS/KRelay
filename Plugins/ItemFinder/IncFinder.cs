@@ -45,7 +45,7 @@ namespace ItemFinder
             proxy.HookCommand("finditem", OnFICommand);
             proxy.HookCommand("setitem", OnSICommand);
             proxy.HookCommand("clearitems", OnCLCommand);
-            proxy.HookCommand("test", test);
+            proxy.HookCommand("test", Test);
         }
 
         private void OnCLCommand(Client client, string command, string[] args)
@@ -54,7 +54,7 @@ namespace ItemFinder
             client.SendToClient(PluginUtils.CreateOryxNotification("Item Finder", "Cleared set items list"));
         }
 
-        private void test(Client client, string command, string[] args)
+        private void Test(Client client, string command, string[] args)
         {
             foreach (var item in _items) Console.WriteLine(item.Key + " " + item.Value);
         }

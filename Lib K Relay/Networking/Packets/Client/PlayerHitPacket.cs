@@ -2,14 +2,14 @@
 {
     public class PlayerHitPacket : Packet
     {
-        public short BulletId;
+        public int BulletId;
         public int ObjectId;
 
         public override PacketType Type => PacketType.PLAYERHIT;
 
         public override void Read(PacketReader r)
         {
-            BulletId = r.ReadInt16();
+            BulletId = r.ReadByte();
             ObjectId = r.ReadInt32();
         }
 

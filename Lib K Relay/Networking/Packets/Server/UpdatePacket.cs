@@ -6,30 +6,30 @@ namespace Lib_K_Relay.Networking.Packets.Server
     public class UpdatePacket : Packet
     {
         public int[] Drops;
-        public int LevelType;
         public Entity[] NewObjs;
-        public Location Position;
         public Tile[] Tiles;
-
+        public byte LevelType;
+        public Location Position;
         public override PacketType Type => PacketType.UPDATE;
 
         public override void Read(PacketReader r)
         {
-            Position = (Location)new Location().Read(r);
-            LevelType = r.ReadInt32();
-            var i = 0;
+            Position = (Location) new Location().Read(r);
+            LevelType = r.ReadByte();
             var tilesLen = CompressedInt.Read(r);
             Tiles = new Tile[tilesLen];
-            for (; i < Tiles.Length; i++)
-                Tiles[i] = (Tile)new Tile().Read(r);
+            for (var i = 0; i < Tiles.Length; i++)
+                Tiles[i] = (Tile) new Tile().Read(r);
+
             var newObjsLen = CompressedInt.Read(r);
             NewObjs = new Entity[newObjsLen];
-            for (i = 0; i < NewObjs.Length; i++)
-                NewObjs[i] = (Entity)new Entity().Read(r);
+            for (var j = 0; j < NewObjs.Length; j++)
+                NewObjs[j] = (Entity) new Entity().Read(r);
+
             var dropsLen = CompressedInt.Read(r);
             Drops = new int[dropsLen];
-            for (i = 0; i < Drops.Length; i++)
-                Drops[i] = CompressedInt.Read(r);
+            for (var k = 0; k < Drops.Length; k++)
+                Drops[k] = CompressedInt.Read(r);
         }
 
         public override void Write(PacketWriter w)

@@ -43,7 +43,7 @@ namespace MapCacher
         /// <summary>
         ///     The UUID of the map
         /// </summary>
-        public uint UUID;
+        public uint Uuid;
 
         /// <summary>
         ///     The dimensions of the map
@@ -56,7 +56,7 @@ namespace MapCacher
         /// <param name="info">The MapInfoPacket</param>
         public Map(MapInfoPacket info)
         {
-            UUID = info.Seed;
+            Uuid = info.Seed;
             Width = info.Width;
             Height = info.Height;
             Data = new ushort[Width, Height];
@@ -164,7 +164,7 @@ namespace MapCacher
             else
             {
                 map = new Map(mapInfo);
-                CachedMaps[map.UUID] = map;
+                CachedMaps[map.Uuid] = map;
                 CurrentMaps[client] = map;
                 SendQueues[client] = new List<Tile>(); // no tiles cached yet
 

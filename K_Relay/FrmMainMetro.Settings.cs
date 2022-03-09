@@ -9,13 +9,13 @@ namespace K_Relay
 {
     partial class FrmMainMetro
     {
-        private FixedStyleManager m_themeManager;
+        private FixedStyleManager _mThemeManager;
 
         private void InitSettings()
         {
             Invoke((MethodInvoker)delegate
             {
-                m_themeManager = new FixedStyleManager(this);
+                _mThemeManager = new FixedStyleManager(this);
                 themeCombobox.Items.AddRange(Enum.GetNames(typeof(MetroThemeStyle)));
                 styleCombobox.Items.AddRange(Enum.GetNames(typeof(MetroColorStyle)));
 
@@ -28,20 +28,20 @@ namespace K_Relay
                 tglStartByDefault.Checked = Config.Default.StartProxyByDefault;
                 lstServers.SelectedItem = Config.Default.DefaultServerName;
 
-                m_themeManager.OnStyleChanged += m_themeManager_OnStyleChanged;
+                _mThemeManager.OnStyleChanged += m_themeManager_OnStyleChanged;
                 m_themeManager_OnStyleChanged(null, null);
             });
         }
 
         private void styleCombobox_SelectedValueChanged(object sender, EventArgs e)
         {
-            m_themeManager.Style =
+            _mThemeManager.Style =
                 (MetroColorStyle)Enum.Parse(typeof(MetroColorStyle), (string)styleCombobox.SelectedItem, true);
         }
 
         private void themeCombobox_SelectedValueChanged(object sender, EventArgs e)
         {
-            m_themeManager.Theme =
+            _mThemeManager.Theme =
                 (MetroThemeStyle)Enum.Parse(typeof(MetroThemeStyle), (string)themeCombobox.SelectedItem, true);
         }
 
@@ -63,23 +63,23 @@ namespace K_Relay
 
         private class FixedStyleManager
         {
-            private readonly MetroStyleManager m_manager;
-            private MetroColorStyle m_colorStyle;
-            private MetroThemeStyle m_themeStyle;
+            private readonly MetroStyleManager _mManager;
+            private MetroColorStyle _mColorStyle;
+            private MetroThemeStyle _mThemeStyle;
 
 
             public FixedStyleManager(MetroForm form)
             {
-                m_manager = new MetroStyleManager(form.Container);
-                m_manager.Owner = form;
+                _mManager = new MetroStyleManager(form.Container);
+                _mManager.Owner = form;
             }
 
             public MetroColorStyle Style
             {
-                get => m_colorStyle;
+                get => _mColorStyle;
                 set
                 {
-                    m_colorStyle = value;
+                    _mColorStyle = value;
                     Update();
                     if (OnStyleChanged != null) OnStyleChanged(this, new EventArgs());
                 }
@@ -87,10 +87,10 @@ namespace K_Relay
 
             public MetroThemeStyle Theme
             {
-                get => m_themeStyle;
+                get => _mThemeStyle;
                 set
                 {
-                    m_themeStyle = value;
+                    _mThemeStyle = value;
                     Update();
                     if (OnThemeChanged != null) OnThemeChanged(this, new EventArgs());
                 }
@@ -101,11 +101,11 @@ namespace K_Relay
 
             public void Update()
             {
-                (m_manager.Owner as MetroForm).Theme = m_themeStyle;
-                (m_manager.Owner as MetroForm).Style = m_colorStyle;
+                (_mManager.Owner as MetroForm).Theme = _mThemeStyle;
+                (_mManager.Owner as MetroForm).Style = _mColorStyle;
 
-                m_manager.Theme = m_themeStyle;
-                m_manager.Style = m_colorStyle;
+                _mManager.Theme = _mThemeStyle;
+                _mManager.Style = _mColorStyle;
             }
         }
     }

@@ -2,7 +2,7 @@
 {
     public class TextPacket : Packet
     {
-        public byte BubbleTime;
+        public int BubbleTime;
         public string CleanText = "";
         public bool IsSupporter;
         public string Name = "";

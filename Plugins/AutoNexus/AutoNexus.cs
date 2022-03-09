@@ -28,32 +28,32 @@ namespace AutoNexus
         ///     Map of piercing projectiles
         ///     Object ID -> list of piercing projectile IDs
         /// </summary>
-        public static Dictionary<int, List<int>> piercing = new Dictionary<int, List<int>>();
+        public static Dictionary<int, List<int>> Piercing = new Dictionary<int, List<int>>();
 
         /// <summary>
         ///     Map of armor break projectiles
         ///     Object ID -> list of armor break projectile IDs
         /// </summary>
-        public static Dictionary<int, List<int>> breaking = new Dictionary<int, List<int>>();
+        public static Dictionary<int, List<int>> Breaking = new Dictionary<int, List<int>>();
 
         public static bool IsPiercing(int enemyType, int projectileType)
         {
-            return piercing.ContainsKey(enemyType) && piercing[enemyType].Contains(projectileType);
+            return Piercing.ContainsKey(enemyType) && Piercing[enemyType].Contains(projectileType);
         }
 
         public static bool IsArmorBreaking(int enemyType, int projectileType)
         {
-            return breaking.ContainsKey(enemyType) && breaking[enemyType].Contains(projectileType);
+            return Breaking.ContainsKey(enemyType) && Breaking[enemyType].Contains(projectileType);
         }
 
         // owner ID of bullet
-        public int OwnerID;
+        public int OwnerId;
 
         // the ID of the bullet
-        public int ID;
+        public int Id;
 
         // the type of projectile
-        public int ProjectileID;
+        public int ProjectileId;
 
         // raw damage
         public int Damage;
@@ -68,17 +68,17 @@ namespace AutoNexus
         // enemy id -> projectiles
         public Dictionary<int, List<Bullet>> BulletMap = new Dictionary<int, List<Bullet>>();
 
-        public Client client;
+        public Client Client;
 
         // enemy id -> enemy type
         public Dictionary<int, ushort> EnemyTypeMap = new Dictionary<int, ushort>();
-        public int HP = 100;
+        public int Hp = 100;
 
-        public bool safe = true;
+        public bool Safe = true;
 
         public ClientState(Client client)
         {
-            this.client = client;
+            this.Client = client;
         }
 
         public void Update(UpdatePacket update)
@@ -90,27 +90,27 @@ namespace AutoNexus
 
         public void Tick(NewTickPacket tick)
         {
-            var regenHP = (int)(0.2 + client.PlayerData.Vitality * 0.024);
-            if (!client.PlayerData.HasConditionEffect(ConditionEffectIndex.InCombat))
-                regenHP *= 2;
-            HP += regenHP;
+            var regenHp = (int)(0.2 + Client.PlayerData.Vitality * 0.024);
+            if (!Client.PlayerData.HasConditionEffect(ConditionEffectIndex.InCombat))
+                regenHp *= 2;
+            Hp += regenHp;
 
             foreach (var status in tick.Statuses)
-                if (status.ObjectId == client.ObjectId)
+                if (status.ObjectId == Client.ObjectId)
                     foreach (var stat in status.Data)
                         if (stat.Id == (int)StatsType.Stats.Hp)
-                            HP = stat.IntValue;
+                            Hp = stat.IntValue;
 
-            ArmorBroken = client.PlayerData.HasConditionEffect(ConditionEffectIndex.ArmorBroken);
-            Armored = client.PlayerData.HasConditionEffect(ConditionEffectIndex.Armored);
+            ArmorBroken = Client.PlayerData.HasConditionEffect(ConditionEffectIndex.ArmorBroken);
+            Armored = Client.PlayerData.HasConditionEffect(ConditionEffectIndex.Armored);
         }
 
         private void MapBullet(Bullet b)
         {
-            if (!BulletMap.ContainsKey(b.OwnerID))
-                BulletMap[b.OwnerID] = new List<Bullet>();
+            if (!BulletMap.ContainsKey(b.OwnerId))
+                BulletMap[b.OwnerId] = new List<Bullet>();
 
-            BulletMap[b.OwnerID].Add(b);
+            BulletMap[b.OwnerId].Add(b);
         }
 
         public void EnemyShoot(EnemyShootPacket eshoot)
@@ -119,9 +119,9 @@ namespace AutoNexus
             {
                 var b = new Bullet
                 {
-                    OwnerID = eshoot.OwnerId,
-                    ID = eshoot.BulletId + i,
-                    ProjectileID = eshoot.BulletType,
+                    OwnerId = eshoot.OwnerId,
+                    Id = eshoot.BulletId + i,
+                    ProjectileId = eshoot.BulletType,
                     Damage = eshoot.Damage
                 };
                 MapBullet(b);
@@ -130,7 +130,7 @@ namespace AutoNexus
 
         private int PredictDamage(AoEPacket aoe)
         {
-            var def = client.PlayerData.Defense;
+            var def = Client.PlayerData.Defense;
 
             if (aoe.Effect == ConditionEffectIndex.ArmorBroken)
                 ArmorBroken = true;
@@ -144,21 +144,21 @@ namespace AutoNexus
 
         private int PredictDamage(Bullet b)
         {
-            var def = client.PlayerData.Defense;
+            var def = Client.PlayerData.Defense;
 
-            if (EnemyTypeMap.ContainsKey(b.OwnerID) &&
-                Bullet.IsArmorBreaking(EnemyTypeMap[b.OwnerID], b.ProjectileID) && !ArmorBroken)
+            if (EnemyTypeMap.ContainsKey(b.OwnerId) &&
+                Bullet.IsArmorBreaking(EnemyTypeMap[b.OwnerId], b.ProjectileId) && !ArmorBroken)
             {
                 ArmorBroken = true;
 
                 if (Config.Default.Debug)
-                    PluginUtils.Log("Auto Nexus", "{0}'s armor is broken!", client.PlayerData.Name);
+                    PluginUtils.Log("Auto Nexus", "{0}'s armor is broken!", Client.PlayerData.Name);
             }
 
             if (Armored) def *= 2;
 
-            if (ArmorBroken || EnemyTypeMap.ContainsKey(b.OwnerID) &&
-                Bullet.IsPiercing(EnemyTypeMap[b.OwnerID], b.ProjectileID))
+            if (ArmorBroken || EnemyTypeMap.ContainsKey(b.OwnerId) &&
+                Bullet.IsPiercing(EnemyTypeMap[b.OwnerId], b.ProjectileId))
                 def = 0;
 
             return Math.Max(Math.Max(b.Damage - def, 0), (int)(0.15f * b.Damage));
@@ -166,19 +166,19 @@ namespace AutoNexus
 
         private bool ApplyDamage(int dmg)
         {
-            if (!safe) return false;
-            HP -= dmg;
+            if (!Safe) return false;
+            Hp -= dmg;
 
             if (Config.Default.Debug)
-                PluginUtils.Log("Auto Nexus", "{0} was hit for {1} damage ({2}/{3})!", client.PlayerData.Name, dmg, HP,
-                    client.PlayerData.MaxHealth);
+                PluginUtils.Log("Auto Nexus", "{0} was hit for {1} damage ({2}/{3})!", Client.PlayerData.Name, dmg, Hp,
+                    Client.PlayerData.MaxHealth);
 
-            if (Config.Default.Enabled && (float)HP / client.PlayerData.MaxHealth <= Config.Default.NexusPercent)
+            if (Config.Default.Enabled && (float)Hp / Client.PlayerData.MaxHealth <= Config.Default.NexusPercent)
             {
-                PluginUtils.Log("Auto Nexus", "Saved {0} at {1}/{2} HP!", client.PlayerData.Name, HP,
-                    client.PlayerData.MaxHealth);
-                client.SendToServer(Packet.Create(PacketType.ESCAPE));
-                safe = false;
+                PluginUtils.Log("Auto Nexus", "Saved {0} at {1}/{2} HP!", Client.PlayerData.Name, Hp,
+                    Client.PlayerData.MaxHealth);
+                Client.SendToServer(Packet.Create(PacketType.ESCAPE));
+                Safe = false;
                 return false;
             }
 
@@ -188,7 +188,7 @@ namespace AutoNexus
         public void PlayerHit(PlayerHitPacket phit)
         {
             foreach (var b in BulletMap[phit.ObjectId])
-                if (b.ID == phit.BulletId)
+                if (b.Id == phit.BulletId)
                 {
                     phit.Send = ApplyDamage(PredictDamage(b));
                     break;
@@ -197,7 +197,7 @@ namespace AutoNexus
 
         public void AoE(AoEPacket aoe)
         {
-            if (client.PlayerData.Pos.DistanceSquaredTo(aoe.Position) <= aoe.Radius * aoe.Radius)
+            if (Client.PlayerData.Pos.DistanceSquaredTo(aoe.Position) <= aoe.Radius * aoe.Radius)
                 aoe.Send = ApplyDamage(PredictDamage(aoe));
         }
 
@@ -208,14 +208,14 @@ namespace AutoNexus
 
         public void GroundDamage(GroundDamagePacket gdamage)
         {
-            var t = client.GetMap().At(gdamage.Position.X, gdamage.Position.Y);
+            var t = Client.GetMap().At(gdamage.Position.X, gdamage.Position.Y);
             if (GameData.Tiles.Map.ContainsKey(t)) gdamage.Send = ApplyDamage(GameData.Tiles.ById(t).MaxDamage);
         }
     }
 
     public class AutoNexus : IPlugin
     {
-        private Dictionary<Client, ClientState> clients;
+        private Dictionary<Client, ClientState> _clients;
 
         public string GetAuthor()
         {
@@ -252,27 +252,27 @@ namespace AutoNexus
                     // armor piercing
                     if (enemy.Value.Projectiles.Any(p => p.ArmorPiercing))
                     {
-                        Bullet.piercing[enemy.Value.Id] = new List<int>();
+                        Bullet.Piercing[enemy.Value.Id] = new List<int>();
                         enemy.Value.Projectiles.ForEach(proj =>
                         {
                             if (proj.ArmorPiercing)
-                                Bullet.piercing[enemy.Value.Id].Add(proj.Id);
+                                Bullet.Piercing[enemy.Value.Id].Add(proj.Id);
                         });
                     }
 
                     // armor break
                     if (enemy.Value.Projectiles.Any(p => p.StatusEffects.ContainsKey("Armor Broken")))
                     {
-                        Bullet.breaking[enemy.Value.Id] = new List<int>();
+                        Bullet.Breaking[enemy.Value.Id] = new List<int>();
                         enemy.Value.Projectiles.ForEach(proj =>
                         {
                             if (proj.StatusEffects.ContainsKey("Armor Broken"))
-                                Bullet.breaking[enemy.Value.Id].Add(proj.Id);
+                                Bullet.Breaking[enemy.Value.Id].Add(proj.Id);
                         });
                     }
                 });
 
-            clients = new Dictionary<Client, ClientState>();
+            _clients = new Dictionary<Client, ClientState>();
 
             proxy.HookCommand("autonexus", OnCommand);
 
@@ -371,19 +371,19 @@ namespace AutoNexus
 
         private void OnConnect(Client client)
         {
-            clients[client] = new ClientState(client);
+            _clients[client] = new ClientState(client);
         }
 
         private void OnDisconnect(Client client)
         {
-            if (clients.ContainsKey(client)) clients.Remove(client);
+            if (_clients.ContainsKey(client)) _clients.Remove(client);
         }
 
         private void OnPacket(Client client, Packet p)
         {
-            if (clients.ContainsKey(client))
+            if (_clients.ContainsKey(client))
             {
-                var state = clients[client];
+                var state = _clients[client];
                 switch (p.Type)
                 {
                     case PacketType.UPDATE:

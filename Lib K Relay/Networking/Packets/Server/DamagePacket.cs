@@ -5,7 +5,7 @@ namespace Lib_K_Relay.Networking.Packets.Server
     public class DamagePacket : Packet
     {
         public bool ArmorPierce;
-        public ushort BulletId;
+        public int BulletId;
         public ushort Damage;
         public ConditionEffectIndex[] Effects;
         public int ObjectId;
@@ -22,7 +22,7 @@ namespace Lib_K_Relay.Networking.Packets.Server
 
             Damage = r.ReadUInt16();
             ArmorPierce = r.ReadBoolean();
-            BulletId = r.ReadUInt16();
+            BulletId = r.ReadByte();
             ObjectId = r.ReadInt32();
         }
 

@@ -28,9 +28,6 @@
             Attack = 20,
             Defense = 21,
             Speed = 22,
-            Unknown23 = 23,
-            Unknown24 = 24,
-            Unknown25 = 25,
             Vitality = 26,
             Wisdom = 27,
             Dexterity = 28,
@@ -74,11 +71,9 @@
             XpBoostTime = 66,
             LootDropBoostTime = 67,
             LootTierBoostTime = 68,
-
             // unused by Exalt
             HealthPotionCount = 69,
             MagicPotionCount = 70,
-
             // unused by Exalt
             Backpack0 = 71,
             Backpack1 = 72,
@@ -89,7 +84,7 @@
             Backpack6 = 77,
             Backpack7 = 78,
             HasBackpack = 79,
-            Texture = 80,
+            Skin = 80,
             PetInstanceId = 81,
             PetName = 82,
             PetType = 83,
@@ -109,13 +104,11 @@
             FortuneTokens = 97,
             SupporterPoints = 98,
             IsSupporter = 99,
-
             // i think the star bg is unused, but still exported?
             ChallengerStarBg = 100,
             PlayerId = 101,
             ProjectileSpeedMult = 102,
             ProjectileLifeMult = 103,
-            CreatedTimestamp = 104,
             OpenedAtTimestamp = 104,
             ExaltedAttack = 105,
             ExaltedDefense = 106,
@@ -128,17 +121,12 @@
             ExaltationDamageMultiplier = 113,
             PetOwnerAccountId = 114,
             GraveAccountId = 115,
-            QuickSlotItem1 = 116,
-            QuickSlotItem2 = 117,
-            QuickSlotItem3 = 118,
-            HasQuickSlotUpgrade = 119,
-            ForgeFire = 120,
-            DungeonMod = 121,
-            Unknown122 = 122,
-            Unknown123 = 123,
-            Unknown124 = 124,
-            Unknown125 = 125,
-            Unknown126 = 126
+            QuickslotItem1 = 116,
+            QuickslotItem2 = 117,
+            QuickslotItem3 = 118,
+            HasQuickslotUpgrade = 119,
+            Forgefire = 120,
+            DungeonModifiers = 121
         }
     }
 }

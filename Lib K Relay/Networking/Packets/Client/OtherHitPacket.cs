@@ -2,7 +2,7 @@
 {
     public class OtherHitPacket : Packet
     {
-        public short BulletId;
+        public int BulletId;
         public int ObjectId;
         public int TargetId;
         public int Time;
@@ -12,7 +12,7 @@
         public override void Read(PacketReader r)
         {
             Time = r.ReadInt32();
-            BulletId = r.ReadInt16();
+            BulletId = r.ReadByte();
             ObjectId = r.ReadInt32();
             TargetId = r.ReadInt32();
         }

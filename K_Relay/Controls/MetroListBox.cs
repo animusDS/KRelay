@@ -12,7 +12,7 @@ namespace K_Relay.Controls
 {
     public class MetroListBox : Control, IMetroControl
     {
-        private MetroScrollBar scrollBar;
+        private MetroScrollBar _scrollBar;
 
         public MetroListBox()
         {
@@ -57,25 +57,25 @@ namespace K_Relay.Controls
             SuspendLayout();
             if (ListBox != null) return;
 
-            scrollBar = new MetroScrollBar();
+            _scrollBar = new MetroScrollBar();
             ListBox = new ListBoxBase();
 
             ListBox.BorderStyle = BorderStyle.None;
             ListBox.Location = new Point(3, 3);
             ListBox.Size = new Size(Width - 16, Height - 6);
-            scrollBar.Scroll += scrollBar_Scroll;
+            _scrollBar.Scroll += scrollBar_Scroll;
 
             Size = new Size(ListBox.Width + 16, ListBox.Height + 6);
 
             ListBox.TabStop = true;
 
-            scrollBar.Maximum = ItemHeight * ListBox.Items.Count;
-            scrollBar.Minimum = 0;
+            _scrollBar.Maximum = ItemHeight * ListBox.Items.Count;
+            _scrollBar.Minimum = 0;
 
-            scrollBar.LargeChange = scrollBar.Maximum / scrollBar.Height + Height;
-            scrollBar.SmallChange = 15;
+            _scrollBar.LargeChange = _scrollBar.Maximum / _scrollBar.Height + Height;
+            _scrollBar.SmallChange = 15;
 
-            Controls.Add(scrollBar);
+            Controls.Add(_scrollBar);
             Controls.Add(ListBox);
         }
 
@@ -107,8 +107,8 @@ namespace K_Relay.Controls
 
         private void scrollBar_Scroll(object sender, ScrollEventArgs e)
         {
-            ListBox.TopIndex = Math.Max(scrollBar.Value / (ItemHeight + 1), 0);
-            scrollBar.Refresh();
+            ListBox.TopIndex = Math.Max(_scrollBar.Value / (ItemHeight + 1), 0);
+            _scrollBar.Refresh();
             Application.DoEvents();
         }
 
@@ -151,7 +151,7 @@ namespace K_Relay.Controls
             if (GetStyle(ControlStyles.UserPaint) && CustomPaintForeground != null) CustomPaintForeground(this, e);
         }
 
-        private MetroColorStyle metroStyle = MetroColorStyle.Default;
+        private MetroColorStyle _metroStyle = MetroColorStyle.Default;
 
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         [DefaultValue(MetroColorStyle.Default)]
@@ -159,17 +159,17 @@ namespace K_Relay.Controls
         {
             get
             {
-                if (DesignMode || metroStyle != MetroColorStyle.Default) return metroStyle;
+                if (DesignMode || _metroStyle != MetroColorStyle.Default) return _metroStyle;
 
-                if (StyleManager != null && metroStyle == MetroColorStyle.Default) return StyleManager.Style;
-                if (StyleManager == null && metroStyle == MetroColorStyle.Default) return MetroDefaults.Style;
+                if (StyleManager != null && _metroStyle == MetroColorStyle.Default) return StyleManager.Style;
+                if (StyleManager == null && _metroStyle == MetroColorStyle.Default) return MetroDefaults.Style;
 
-                return metroStyle;
+                return _metroStyle;
             }
-            set => metroStyle = value;
+            set => _metroStyle = value;
         }
 
-        private MetroThemeStyle metroTheme = MetroThemeStyle.Default;
+        private MetroThemeStyle _metroTheme = MetroThemeStyle.Default;
 
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         [DefaultValue(MetroThemeStyle.Default)]
@@ -177,14 +177,14 @@ namespace K_Relay.Controls
         {
             get
             {
-                if (DesignMode || metroTheme != MetroThemeStyle.Default) return metroTheme;
+                if (DesignMode || _metroTheme != MetroThemeStyle.Default) return _metroTheme;
 
-                if (StyleManager != null && metroTheme == MetroThemeStyle.Default) return StyleManager.Theme;
-                if (StyleManager == null && metroTheme == MetroThemeStyle.Default) return MetroDefaults.Theme;
+                if (StyleManager != null && _metroTheme == MetroThemeStyle.Default) return StyleManager.Theme;
+                if (StyleManager == null && _metroTheme == MetroThemeStyle.Default) return MetroDefaults.Theme;
 
-                return metroTheme;
+                return _metroTheme;
             }
-            set => metroTheme = value;
+            set => _metroTheme = value;
         }
 
         [Browsable(false)]
@@ -299,16 +299,16 @@ namespace K_Relay.Controls
             if (ListBox == null) return;
             ListBox.Location = new Point(3, 3);
             ListBox.Size = new Size(Width - 16, Height - 6);
-            scrollBar.Height = ListBox.Height;
-            scrollBar.Location = new Point(ListBox.Width + 2, 3);
+            _scrollBar.Height = ListBox.Height;
+            _scrollBar.Location = new Point(ListBox.Width + 2, 3);
 
-            if (scrollBar.Height == 0) return;
+            if (_scrollBar.Height == 0) return;
 
-            scrollBar.Maximum = ItemHeight * ListBox.Items.Count;
-            scrollBar.Minimum = 0;
+            _scrollBar.Maximum = ItemHeight * ListBox.Items.Count;
+            _scrollBar.Minimum = 0;
 
-            scrollBar.LargeChange = scrollBar.Maximum / scrollBar.Height + Height;
-            scrollBar.SmallChange = 15;
+            _scrollBar.LargeChange = _scrollBar.Maximum / _scrollBar.Height + Height;
+            _scrollBar.SmallChange = 15;
         }
 
         #endregion

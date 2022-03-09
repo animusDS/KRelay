@@ -13,49 +13,49 @@ namespace K_Relay.Controls
 {
     public class MetroRichTextBox : Control, IMetroControl
     {
-        private readonly List<Appending> appendings;
+        private readonly List<Appending> _appendings;
 
         public void AppendText(string text, Color color, bool bold) //Empty for use theme color
         {
-            if (appendings.Count(_ => _.Text == text && _.Color == color && _.Bold == bold) == 0)
-                appendings.Add(Appending.Create(text, color, bold));
+            if (_appendings.Count(_ => _.Text == text && _.Color == color && _.Bold == bold) == 0)
+                _appendings.Add(Appending.Create(text, color, bold));
 
-            baseTextBox.SelectionStart = baseTextBox.TextLength;
-            baseTextBox.SelectionLength = 0;
+            _baseTextBox.SelectionStart = _baseTextBox.TextLength;
+            _baseTextBox.SelectionLength = 0;
             if (bold)
-                baseTextBox.SelectionFont = new Font(baseTextBox.Font, FontStyle.Bold);
+                _baseTextBox.SelectionFont = new Font(_baseTextBox.Font, FontStyle.Bold);
             else
-                baseTextBox.SelectionFont = new Font(baseTextBox.Font, FontStyle.Regular);
-            baseTextBox.SelectionColor = color == Color.Empty ? MetroPaint.ForeColor.Label.Normal(Theme) : color;
-            baseTextBox.AppendText(text);
-            baseTextBox.SelectionColor = baseTextBox.ForeColor;
+                _baseTextBox.SelectionFont = new Font(_baseTextBox.Font, FontStyle.Regular);
+            _baseTextBox.SelectionColor = color == Color.Empty ? MetroPaint.ForeColor.Label.Normal(Theme) : color;
+            _baseTextBox.AppendText(text);
+            _baseTextBox.SelectionColor = _baseTextBox.ForeColor;
         }
 
         public void ReAppendText()
         {
-            foreach (var app in appendings)
+            foreach (var app in _appendings)
                 AppendText(app.Text, app.Color, app.Bold);
         }
 
-        public RichTextBox ToWinFormRTB()
+        public RichTextBox ToWinFormRtb()
         {
-            return baseTextBox;
+            return _baseTextBox;
         }
 
         #region PromptedTextBox
 
         private class PromptedTextBox : RichTextBox
         {
-            private const int OCM_COMMAND = 0x2111;
-            private const int WM_PAINT = 15;
+            private const int OcmCommand = 0x2111;
+            private const int WmPaint = 15;
 
-            private bool drawPrompt;
+            private bool _drawPrompt;
 
-            private string promptText = "";
+            private string _promptText = "";
 
             public PromptedTextBox()
             {
-                drawPrompt = Text.Trim().Length == 0;
+                _drawPrompt = Text.Trim().Length == 0;
             }
 
             [Browsable(true)]
@@ -63,10 +63,10 @@ namespace K_Relay.Controls
             [DefaultValue("")]
             public string PromptText
             {
-                get => promptText;
+                get => _promptText;
                 set
                 {
-                    promptText = value.Trim();
+                    _promptText = value.Trim();
                     Invalidate();
                 }
             }
@@ -101,25 +101,25 @@ namespace K_Relay.Controls
                         break;
                 }
 
-                TextRenderer.DrawText(g, promptText, Font, clientRectangle, SystemColors.GrayText, BackColor, flags);
+                TextRenderer.DrawText(g, _promptText, Font, clientRectangle, SystemColors.GrayText, BackColor, flags);
             }
 
             protected override void OnPaint(PaintEventArgs e)
             {
                 base.OnPaint(e);
-                if (drawPrompt) DrawTextPrompt(e.Graphics);
+                if (_drawPrompt) DrawTextPrompt(e.Graphics);
             }
 
             protected override void OnTextChanged(EventArgs e)
             {
                 base.OnTextChanged(e);
-                drawPrompt = Text.Trim().Length == 0;
+                _drawPrompt = Text.Trim().Length == 0;
             }
 
             protected override void WndProc(ref Message m)
             {
                 base.WndProc(ref m);
-                if ((m.Msg == WM_PAINT || m.Msg == OCM_COMMAND) && drawPrompt && !GetStyle(ControlStyles.UserPaint))
+                if ((m.Msg == WmPaint || m.Msg == OcmCommand) && _drawPrompt && !GetStyle(ControlStyles.UserPaint))
                     DrawTextPrompt();
             }
         }
@@ -169,7 +169,7 @@ namespace K_Relay.Controls
             if (GetStyle(ControlStyles.UserPaint) && CustomPaintForeground != null) CustomPaintForeground(this, e);
         }
 
-        private MetroColorStyle metroStyle = MetroColorStyle.Default;
+        private MetroColorStyle _metroStyle = MetroColorStyle.Default;
 
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         [DefaultValue(MetroColorStyle.Default)]
@@ -177,17 +177,17 @@ namespace K_Relay.Controls
         {
             get
             {
-                if (DesignMode || metroStyle != MetroColorStyle.Default) return metroStyle;
+                if (DesignMode || _metroStyle != MetroColorStyle.Default) return _metroStyle;
 
-                if (StyleManager != null && metroStyle == MetroColorStyle.Default) return StyleManager.Style;
-                if (StyleManager == null && metroStyle == MetroColorStyle.Default) return MetroDefaults.Style;
+                if (StyleManager != null && _metroStyle == MetroColorStyle.Default) return StyleManager.Style;
+                if (StyleManager == null && _metroStyle == MetroColorStyle.Default) return MetroDefaults.Style;
 
-                return metroStyle;
+                return _metroStyle;
             }
-            set => metroStyle = value;
+            set => _metroStyle = value;
         }
 
-        private MetroThemeStyle metroTheme = MetroThemeStyle.Default;
+        private MetroThemeStyle _metroTheme = MetroThemeStyle.Default;
 
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         [DefaultValue(MetroThemeStyle.Default)]
@@ -195,14 +195,14 @@ namespace K_Relay.Controls
         {
             get
             {
-                if (DesignMode || metroTheme != MetroThemeStyle.Default) return metroTheme;
+                if (DesignMode || _metroTheme != MetroThemeStyle.Default) return _metroTheme;
 
-                if (StyleManager != null && metroTheme == MetroThemeStyle.Default) return StyleManager.Theme;
-                if (StyleManager == null && metroTheme == MetroThemeStyle.Default) return MetroDefaults.Theme;
+                if (StyleManager != null && _metroTheme == MetroThemeStyle.Default) return StyleManager.Theme;
+                if (StyleManager == null && _metroTheme == MetroThemeStyle.Default) return MetroDefaults.Theme;
 
-                return metroTheme;
+                return _metroTheme;
             }
-            set => metroTheme = value;
+            set => _metroTheme = value;
         }
 
         [Browsable(false)]
@@ -234,32 +234,32 @@ namespace K_Relay.Controls
 
         #region Fields
 
-        private PromptedTextBox baseTextBox;
+        private PromptedTextBox _baseTextBox;
 
-        private MetroTextBoxSize metroTextBoxSize = MetroTextBoxSize.Small;
+        private MetroTextBoxSize _metroTextBoxSize = MetroTextBoxSize.Small;
 
         [DefaultValue(MetroTextBoxSize.Small)]
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         public MetroTextBoxSize FontSize
         {
-            get => metroTextBoxSize;
+            get => _metroTextBoxSize;
             set
             {
-                metroTextBoxSize = value;
+                _metroTextBoxSize = value;
                 UpdateBaseTextBox();
             }
         }
 
-        private MetroTextBoxWeight metroTextBoxWeight = MetroTextBoxWeight.Regular;
+        private MetroTextBoxWeight _metroTextBoxWeight = MetroTextBoxWeight.Regular;
 
         [DefaultValue(MetroTextBoxWeight.Regular)]
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         public MetroTextBoxWeight FontWeight
         {
-            get => metroTextBoxWeight;
+            get => _metroTextBoxWeight;
             set
             {
-                metroTextBoxWeight = value;
+                _metroTextBoxWeight = value;
                 UpdateBaseTextBox();
             }
         }
@@ -270,11 +270,11 @@ namespace K_Relay.Controls
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         public string PromptText
         {
-            get => baseTextBox.PromptText;
-            set => baseTextBox.PromptText = value;
+            get => _baseTextBox.PromptText;
+            set => _baseTextBox.PromptText = value;
         }
 
-        private Image textBoxIcon;
+        private Image _textBoxIcon;
 
         [Browsable(true)]
         [EditorBrowsable(EditorBrowsableState.Always)]
@@ -282,15 +282,15 @@ namespace K_Relay.Controls
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         public Image Icon
         {
-            get => textBoxIcon;
+            get => _textBoxIcon;
             set
             {
-                textBoxIcon = value;
+                _textBoxIcon = value;
                 Refresh();
             }
         }
 
-        private bool textBoxIconRight;
+        private bool _textBoxIconRight;
 
         [Browsable(true)]
         [EditorBrowsable(EditorBrowsableState.Always)]
@@ -298,15 +298,15 @@ namespace K_Relay.Controls
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         public bool IconRight
         {
-            get => textBoxIconRight;
+            get => _textBoxIconRight;
             set
             {
-                textBoxIconRight = value;
+                _textBoxIconRight = value;
                 Refresh();
             }
         }
 
-        private bool displayIcon = true;
+        private bool _displayIcon = true;
 
         [Browsable(true)]
         [EditorBrowsable(EditorBrowsableState.Always)]
@@ -314,21 +314,21 @@ namespace K_Relay.Controls
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         public bool DisplayIcon
         {
-            get => displayIcon;
+            get => _displayIcon;
             set
             {
-                displayIcon = value;
+                _displayIcon = value;
                 Refresh();
             }
         }
 
-        protected Size iconSize
+        protected Size IconSize
         {
             get
             {
-                if (displayIcon && textBoxIcon != null)
+                if (_displayIcon && _textBoxIcon != null)
                 {
-                    var originalSize = textBoxIcon.Size;
+                    var originalSize = _textBoxIcon.Size;
                     var resizeFactor = (ClientRectangle.Height - 2) / (double)originalSize.Height;
 
                     var iconLocation = new Point(1, 1);
@@ -346,99 +346,99 @@ namespace K_Relay.Controls
 
         public override ContextMenu ContextMenu
         {
-            get => baseTextBox.ContextMenu;
+            get => _baseTextBox.ContextMenu;
             set
             {
                 ContextMenu = value;
-                baseTextBox.ContextMenu = value;
+                _baseTextBox.ContextMenu = value;
             }
         }
 
         public override ContextMenuStrip ContextMenuStrip
         {
-            get => baseTextBox.ContextMenuStrip;
+            get => _baseTextBox.ContextMenuStrip;
             set
             {
                 ContextMenuStrip = value;
-                baseTextBox.ContextMenuStrip = value;
+                _baseTextBox.ContextMenuStrip = value;
             }
         }
 
         [DefaultValue(false)]
         public bool Multiline
         {
-            get => baseTextBox.Multiline;
-            set => baseTextBox.Multiline = value;
+            get => _baseTextBox.Multiline;
+            set => _baseTextBox.Multiline = value;
         }
 
         [DefaultValue(true)]
         public bool WordWrap
         {
-            get => baseTextBox.WordWrap;
-            set => baseTextBox.WordWrap = value;
+            get => _baseTextBox.WordWrap;
+            set => _baseTextBox.WordWrap = value;
         }
 
         public override string Text
         {
-            get => baseTextBox.Text;
+            get => _baseTextBox.Text;
             set
             {
-                baseTextBox.Text = value;
-                appendings.Clear();
-                appendings.Add(Appending.Create(baseTextBox.Text, Color.Empty, false));
+                _baseTextBox.Text = value;
+                _appendings.Clear();
+                _appendings.Add(Appending.Create(_baseTextBox.Text, Color.Empty, false));
             }
         }
 
         public string[] Lines
         {
-            get => baseTextBox.Lines;
-            set => baseTextBox.Lines = value;
+            get => _baseTextBox.Lines;
+            set => _baseTextBox.Lines = value;
         }
 
         [Browsable(false)]
         public string SelectedText
         {
-            get => baseTextBox.SelectedText;
-            set => baseTextBox.Text = value;
+            get => _baseTextBox.SelectedText;
+            set => _baseTextBox.Text = value;
         }
 
         [DefaultValue(false)]
         public bool ReadOnly
         {
-            get => baseTextBox.ReadOnly;
-            set => baseTextBox.ReadOnly = value;
+            get => _baseTextBox.ReadOnly;
+            set => _baseTextBox.ReadOnly = value;
         }
 
         [DefaultValue(HorizontalAlignment.Left)]
         public HorizontalAlignment SelectionAlignment
         {
-            get => baseTextBox.SelectionAlignment;
-            set => baseTextBox.SelectionAlignment = value;
+            get => _baseTextBox.SelectionAlignment;
+            set => _baseTextBox.SelectionAlignment = value;
         }
 
         [DefaultValue(true)]
         public new bool TabStop
         {
-            get => baseTextBox.TabStop;
-            set => baseTextBox.TabStop = value;
+            get => _baseTextBox.TabStop;
+            set => _baseTextBox.TabStop = value;
         }
 
         public int MaxLength
         {
-            get => baseTextBox.MaxLength;
-            set => baseTextBox.MaxLength = value;
+            get => _baseTextBox.MaxLength;
+            set => _baseTextBox.MaxLength = value;
         }
 
         public RichTextBoxScrollBars ScrollBars
         {
-            get => baseTextBox.ScrollBars;
-            set => baseTextBox.ScrollBars = value;
+            get => _baseTextBox.ScrollBars;
+            set => _baseTextBox.ScrollBars = value;
         }
 
         public BorderStyle BorderStyle
         {
-            get => baseTextBox.BorderStyle;
-            set => baseTextBox.BorderStyle = value;
+            get => _baseTextBox.BorderStyle;
+            set => _baseTextBox.BorderStyle = value;
         }
 
         #endregion
@@ -448,7 +448,7 @@ namespace K_Relay.Controls
         public MetroRichTextBox()
         {
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
-            appendings = new List<Appending>();
+            _appendings = new List<Appending>();
             base.TabStop = false;
             GotFocus += MetroTextBox_GotFocus;
             CreateBaseTextBox();
@@ -458,7 +458,7 @@ namespace K_Relay.Controls
 
         private void MetroTextBox_GotFocus(object sender, EventArgs e)
         {
-            baseTextBox.Focus();
+            _baseTextBox.Focus();
         }
 
         #endregion
@@ -535,18 +535,18 @@ namespace K_Relay.Controls
 
         public void Select(int start, int length)
         {
-            baseTextBox.Select(start, length);
+            _baseTextBox.Select(start, length);
         }
 
         public void SelectAll()
         {
-            baseTextBox.SelectAll();
+            _baseTextBox.SelectAll();
         }
 
         public void Clear()
         {
-            appendings.Clear();
-            baseTextBox.Clear();
+            _appendings.Clear();
+            _baseTextBox.Clear();
         }
 
         public void AppendText(string text)
@@ -563,12 +563,12 @@ namespace K_Relay.Controls
             try
             {
                 var backColor = BackColor;
-                baseTextBox.BackColor = BackColor;
+                _baseTextBox.BackColor = BackColor;
 
                 if (!UseCustomBackColor)
                 {
                     backColor = MetroPaint.BackColor.Button.Normal(Theme);
-                    baseTextBox.BackColor = MetroPaint.BackColor.Button.Normal(Theme);
+                    _baseTextBox.BackColor = MetroPaint.BackColor.Button.Normal(Theme);
                 }
 
                 if (backColor.A == 255)
@@ -606,12 +606,12 @@ namespace K_Relay.Controls
         {
             if (UseCustomForeColor)
             {
-                baseTextBox.ForeColor = ForeColor;
+                _baseTextBox.ForeColor = ForeColor;
             }
             else
             {
-                baseTextBox.ForeColor = MetroPaint.ForeColor.Button.Normal(Theme);
-                baseTextBox.Clear();
+                _baseTextBox.ForeColor = MetroPaint.ForeColor.Button.Normal(Theme);
+                _baseTextBox.Clear();
                 ReAppendText();
             }
 
@@ -630,17 +630,17 @@ namespace K_Relay.Controls
 
         private void DrawIcon(Graphics g)
         {
-            if (displayIcon && textBoxIcon != null)
+            if (_displayIcon && _textBoxIcon != null)
             {
                 var iconLocation = new Point(1, 1);
-                if (textBoxIconRight) iconLocation = new Point(ClientRectangle.Width - iconSize.Width - 1, 1);
+                if (_textBoxIconRight) iconLocation = new Point(ClientRectangle.Width - IconSize.Width - 1, 1);
 
-                g.DrawImage(textBoxIcon, new Rectangle(iconLocation, iconSize));
+                g.DrawImage(_textBoxIcon, new Rectangle(iconLocation, IconSize));
 
                 UpdateBaseTextBox();
             }
 
-            OnCustomPaintForeground(new MetroPaintEventArgs(Color.Empty, baseTextBox.ForeColor, g));
+            OnCustomPaintForeground(new MetroPaintEventArgs(Color.Empty, _baseTextBox.ForeColor, g));
         }
 
         #endregion
@@ -665,62 +665,62 @@ namespace K_Relay.Controls
 
         private void CreateBaseTextBox()
         {
-            if (baseTextBox != null) return;
+            if (_baseTextBox != null) return;
 
-            baseTextBox = new PromptedTextBox();
+            _baseTextBox = new PromptedTextBox();
 
-            baseTextBox.BorderStyle = BorderStyle.None;
-            baseTextBox.Font = MetroFonts.TextBox(metroTextBoxSize, metroTextBoxWeight);
-            baseTextBox.Location = new Point(3, 3);
-            baseTextBox.Size = new Size(Width - 6, Height - 6);
+            _baseTextBox.BorderStyle = BorderStyle.None;
+            _baseTextBox.Font = MetroFonts.TextBox(_metroTextBoxSize, _metroTextBoxWeight);
+            _baseTextBox.Location = new Point(3, 3);
+            _baseTextBox.Size = new Size(Width - 6, Height - 6);
 
-            Size = new Size(baseTextBox.Width + 6, baseTextBox.Height + 6);
+            Size = new Size(_baseTextBox.Width + 6, _baseTextBox.Height + 6);
 
-            baseTextBox.TabStop = true;
+            _baseTextBox.TabStop = true;
             //baseTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right;
 
-            Controls.Add(baseTextBox);
+            Controls.Add(_baseTextBox);
         }
 
         private void AddEventHandler()
         {
-            baseTextBox.AcceptsTabChanged += BaseTextBoxAcceptsTabChanged;
+            _baseTextBox.AcceptsTabChanged += BaseTextBoxAcceptsTabChanged;
 
-            baseTextBox.CausesValidationChanged += BaseTextBoxCausesValidationChanged;
-            baseTextBox.ChangeUICues += BaseTextBoxChangeUiCues;
-            baseTextBox.Click += BaseTextBoxClick;
-            baseTextBox.ClientSizeChanged += BaseTextBoxClientSizeChanged;
-            baseTextBox.ContextMenuChanged += BaseTextBoxContextMenuChanged;
-            baseTextBox.ContextMenuStripChanged += BaseTextBoxContextMenuStripChanged;
-            baseTextBox.CursorChanged += BaseTextBoxCursorChanged;
+            _baseTextBox.CausesValidationChanged += BaseTextBoxCausesValidationChanged;
+            _baseTextBox.ChangeUICues += BaseTextBoxChangeUiCues;
+            _baseTextBox.Click += BaseTextBoxClick;
+            _baseTextBox.ClientSizeChanged += BaseTextBoxClientSizeChanged;
+            _baseTextBox.ContextMenuChanged += BaseTextBoxContextMenuChanged;
+            _baseTextBox.ContextMenuStripChanged += BaseTextBoxContextMenuStripChanged;
+            _baseTextBox.CursorChanged += BaseTextBoxCursorChanged;
 
-            baseTextBox.KeyDown += BaseTextBoxKeyDown;
-            baseTextBox.KeyPress += BaseTextBoxKeyPress;
-            baseTextBox.KeyUp += BaseTextBoxKeyUp;
+            _baseTextBox.KeyDown += BaseTextBoxKeyDown;
+            _baseTextBox.KeyPress += BaseTextBoxKeyPress;
+            _baseTextBox.KeyUp += BaseTextBoxKeyUp;
 
-            baseTextBox.SizeChanged += BaseTextBoxSizeChanged;
+            _baseTextBox.SizeChanged += BaseTextBoxSizeChanged;
 
-            baseTextBox.TextChanged += BaseTextBoxTextChanged;
+            _baseTextBox.TextChanged += BaseTextBoxTextChanged;
         }
 
         private void UpdateBaseTextBox()
         {
-            if (baseTextBox == null) return;
+            if (_baseTextBox == null) return;
 
-            baseTextBox.Font = MetroFonts.TextBox(metroTextBoxSize, metroTextBoxWeight);
+            _baseTextBox.Font = MetroFonts.TextBox(_metroTextBoxSize, _metroTextBoxWeight);
 
-            if (displayIcon)
+            if (_displayIcon)
             {
-                var textBoxLocation = new Point(iconSize.Width + 4, 3);
-                if (textBoxIconRight) textBoxLocation = new Point(3, 3);
+                var textBoxLocation = new Point(IconSize.Width + 4, 3);
+                if (_textBoxIconRight) textBoxLocation = new Point(3, 3);
 
-                baseTextBox.Location = textBoxLocation;
-                baseTextBox.Size = new Size(Width - 7 - iconSize.Width, Height - 6);
+                _baseTextBox.Location = textBoxLocation;
+                _baseTextBox.Size = new Size(Width - 7 - IconSize.Width, Height - 6);
             }
             else
             {
-                baseTextBox.Location = new Point(3, 3);
-                baseTextBox.Size = new Size(Width - 6, Height - 6);
+                _baseTextBox.Location = new Point(3, 3);
+                _baseTextBox.Size = new Size(Width - 6, Height - 6);
             }
         }
 

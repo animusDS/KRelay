@@ -4,7 +4,7 @@
     {
         public static int Read(PacketReader r)
         {
-            int uByte = r.ReadByte();
+            var uByte = r.ReadByte();
             var isNegative = (uByte & 64) != 0;
             var shift = 6;
             var value = uByte & 63;

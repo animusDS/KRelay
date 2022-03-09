@@ -3,15 +3,13 @@ using Lib_K_Relay.Networking.Packets.DataObjects.Data;
 
 namespace Lib_K_Relay.Networking.Packets.DataObjects.Stat
 {
-    public class StatData : IDataObject
-    {
+    public class StatData : IDataObject {
         public StatsType Id;
         public int IntValue;
         public int SecondaryValue;
         public string StringValue;
 
-        public IDataObject Read(PacketReader r)
-        {
+        public IDataObject Read(PacketReader r) {
             Id = r.ReadByte();
             if (IsStringData())
                 StringValue = r.ReadString();
@@ -19,24 +17,22 @@ namespace Lib_K_Relay.Networking.Packets.DataObjects.Stat
                 IntValue = CompressedInt.Read(r);
 
             SecondaryValue = CompressedInt.Read(r);
+
             return this;
         }
 
-        public void Write(PacketWriter w)
-        {
+        public void Write(PacketWriter w) {
             w.Write(Id);
             if (IsStringData())
                 w.Write(StringValue);
             else
                 CompressedInt.Write(w, IntValue);
-            
+
             CompressedInt.Write(w, SecondaryValue);
         }
 
-        public object Clone()
-        {
-            return new StatData
-            {
+        public object Clone() {
+            return new StatData {
                 Id = Id,
                 IntValue = IntValue,
                 StringValue = StringValue,
@@ -44,13 +40,11 @@ namespace Lib_K_Relay.Networking.Packets.DataObjects.Stat
             };
         }
 
-        public bool IsStringData()
-        {
+        public bool IsStringData() {
             return Id.IsUtf();
         }
 
-        public override string ToString()
-        {
+        public override string ToString() {
             return "{ Id=" + Id + " Value=" + (IsStringData() ? StringValue : IntValue.ToString()) +
                    " SecondaryValue=" + SecondaryValue + " }";
         }
@@ -68,13 +62,14 @@ namespace Lib_K_Relay.Networking.Packets.DataObjects.Stat
         public bool IsUtf()
         {
             return (int)this == (int)Stats.Name
+                   || (int)this == (int)Stats.Experience
                    || (int)this == (int)Stats.AccountId
                    || (int)this == (int)Stats.OwnerAccountId
                    || (int)this == (int)Stats.GuildName
+                   || (int)this == (int)Stats.Skin
                    || (int)this == (int)Stats.PetName
                    || (int)this == (int)Stats.GraveAccountId
-                   || (int)this == (int)Stats.Texture
-                   || (int)this == (int)Stats.DungeonMod;
+                   || (int)this == (int)Stats.DungeonModifiers;
         }
 
         public static implicit operator StatsType(int type)
